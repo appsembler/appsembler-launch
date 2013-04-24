@@ -128,6 +128,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 
     # Third-party apps
+    'tastypie',
 
     # Project apps
     'deployment',
