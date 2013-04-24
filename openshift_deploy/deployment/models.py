@@ -17,8 +17,9 @@ class Project(models.Model):
     def __unicode__(self):
         return self.name
 
-    def version_list(self):
-        return [v.strip() for v in self.version.split(',')]
+    def cartridges_list(self):
+        complete_list = self.version + "," + self.database
+        return [v.strip() for v in complete_list.split(',')]
 
 
 class Deployment(models.Model):
@@ -53,7 +54,7 @@ class Deployment(models.Model):
         )
         status, res = li.app_create(
             app_name=self.project.name,
-            app_type=self.project.version_list(),
+            app_type=self.project.cartridges_list(),
             init_git_url=self.project.github_url
         )
 

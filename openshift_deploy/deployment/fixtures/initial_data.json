@@ -1,0 +1,22 @@
+[
+{
+  "pk": 1, 
+  "model": "deployment.project", 
+  "fields": {
+    "github_url": "https://github.com/openshift/wordpress-example", 
+    "version": "php-5.3", 
+    "name": "Wordpress", 
+    "database": "mysql-5.1"
+  }
+},
+{
+  "pk": 2, 
+  "model": "deployment.project", 
+  "fields": {
+    "github_url": "https://github.com/openshift/drupal-quickstart.git", 
+    "version": "php-5.3, cron", 
+    "name": "Drupal", 
+    "database": "mysql-5.1"
+  }
+}
+]
