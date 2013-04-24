@@ -21,14 +21,16 @@
     <!-- Templates -->
     {% verbatim %}
     <script type="text/template" id="project_form_template">
-      <form class="form-deploy">
+      <form class="form-deploy" method="post">
         <h3 class="form-deploy-heading">Pick your weapon</h3>
         <select name="project" id="project_select">
           <% _.each(projects, function(project) { %>
-              <option value="<%= project.name %>"><%= project.name %></option>
+              <option value="<%= project.resource_uri %>"><%= project.name %></option>
           <% }); %>
-          
         </select>
+        <div class="alert alert-info" id="info-message">
+          Cloning the code...
+        </div>
         <button class="btn btn-success" type="submit">Fire away!</button>
       </form>
     </script>

@@ -1,5 +1,5 @@
 Django==1.5.1
-django-tastypie==0.9.14
+-e git://github.com/toastdriven/django-tastypie.git@6efdea7e1ec5846255e9b4c8b1faf5722e364eba#egg=django_tastypie-dev
 mimeparse==0.1.3
 -e git+git@github.com:natea/python-interface.git@2f3eec0f9f9548eec48e8c9d04bcdc1151163c78#egg=pyopenshift-dev
 python-dateutil==2.1

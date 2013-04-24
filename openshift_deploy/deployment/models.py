@@ -1,4 +1,11 @@
+from exceptions import Exception
+from django.conf import settings
 from django.db import models
+from oshift import Openshift
+
+
+class DeploymentException(Exception):
+    pass
 
 
 class Project(models.Model):
@@ -10,6 +17,9 @@ class Project(models.Model):
     def __unicode__(self):
         return self.name
 
+    def version_list(self):
+        return [v.strip() for v in self.version.split(',')]
+
 
 class Deployment(models.Model):
     project = models.ForeignKey(Project, related_name='deployments')
@@ -20,4 +30,41 @@ class Deployment(models.Model):
     status = models.CharField(max_length=50)
 
     def __unicode__(self):
-        return u"{0}: {1}".format(self.project.name, self.deploy_id)
+        return self.deploy_id
+
+    def save(self, *args, **kwargs):
+        try:
+            data = self.deploy()
+        except DeploymentException:
+            raise
+
+        self.url = data['app_url']
+        self.deploy_id = self.project.name + data['uuid']
+        self.status = data['status']
+        super(Deployment, self).save(*args, **kwargs)
+
+    def deploy(self):
+        li = Openshift(
+            host=settings.OPENSHIFT_HOST,
+            user=settings.OPENSHIFT_USER,
+            passwd=settings.OPENSHIFT_PASSWORD,
+            debug=settings.OPENSHIFT_DEBUG,
+            verbose=settings.OPENSHIFT_VERBOSE
+        )
+        status, res = li.app_create(
+            app_name=self.project.name,
+            app_type=self.project.version_list(),
+            init_git_url=self.project.github_url
+        )
+
+        if status == 201:
+            data = res()
+            print status
+            print data
+            return {
+                'app_url': data['data'].get('app_url'),
+                'status': data.get('status'),
+                'uuid': data['data'].get('uuid'),
+            }
+        else:
+            raise DeploymentException(res()['messages'][0]['text'])

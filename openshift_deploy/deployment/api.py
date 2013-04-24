@@ -1,16 +1,22 @@
 from tastypie.authorization import Authorization
+from tastypie import http, fields
+from tastypie.exceptions import ImmediateHttpResponse
 from tastypie.resources import ModelResource
-from .models import Deployment, Project
+from .models import Deployment, Project, DeploymentException
 
 
 class ProjectResource(ModelResource):
     class Meta:
         resource_name = 'projects'
         queryset = Project.objects.all()
+        authorization = Authorization()
 
 
 class DeploymentResource(ModelResource):
+    project = fields.ForeignKey(ProjectResource, 'project')
+
     class Meta:
         resource_name = 'deployments'
         queryset = Deployment.objects.all()
         authorization = Authorization()
+        always_return_data = True

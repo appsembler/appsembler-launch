@@ -159,3 +159,10 @@ LOGGING = {
         },
     }
 }
+
+# OpenShift settings
+OPENSHIFT_HOST = 'openshift.redhat.com'
+OPENSHIFT_USER = 'filip.ccusa@gmail.com'
+OPENSHIFT_PASSWORD = ''
+OPENSHIFT_DEBUG = True
+OPENSHIFT_VERBOSE = True
