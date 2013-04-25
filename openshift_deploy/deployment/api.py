@@ -1,8 +1,7 @@
 from tastypie.authorization import Authorization
-from tastypie import http, fields
-from tastypie.exceptions import ImmediateHttpResponse
+from tastypie import fields
 from tastypie.resources import ModelResource
-from .models import Deployment, Project, DeploymentException
+from .models import Deployment, Project
 
 
 class ProjectResource(ModelResource):
