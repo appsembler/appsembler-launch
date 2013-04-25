@@ -57,14 +57,14 @@ $(function(){
         deploymentSuccess: function(model, response, options) {
             var $info = $("#info-message");
             $info.removeClass('alert-info').addClass('alert-success');
-            $info.text('Your deployment was successful!');
+            $info.html('<i class="icon-ok"></i> Your deployment was successful!');
             $("<strong>" + model.get('url') + "</strong>").insertAfter($info);
         },
 
         deploymentFail: function(model, xhr, options) {
             var $info = $("#info-message");
             $info.removeClass('alert-info').addClass('alert-error');
-            $info.text('An error occurred!');
+            $info.html('<i class="icon-remove"></i> An error occurred!');
         }
     });
 
