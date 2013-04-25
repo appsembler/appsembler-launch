@@ -44,8 +44,10 @@ $(function(){
         deploy: function(e) {
             $("#info-message").show();
             var project_uri = this.$('select[name=project]').val();
+            var email = this.$('input[name=email]').val();
             var deploy = new Deployment({
-                project: project_uri
+                project: project_uri,
+                email: email
             });
             deploy.save({}, {
                 success: this.deploymentSuccess,
@@ -58,7 +60,8 @@ $(function(){
             var $info = $("#info-message");
             $info.removeClass('alert-info').addClass('alert-success');
             $info.html('<i class="icon-ok"></i> Your deployment was successful!');
-            $("<strong>" + model.get('url') + "</strong>").insertAfter($info);
+            var app_link = '<a class="app-url" href="' + model.get('url') + '">' + model.get('url') + '</a>';
+            $(app_link).insertAfter($info);
         },
 
         deploymentFail: function(model, xhr, options) {

@@ -1,6 +1,7 @@
 import random
 import string
 from django.conf import settings
+from django.core.mail import send_mail
 from django.db import models
 from oshift import Openshift
 
@@ -32,11 +33,14 @@ class Deployment(models.Model):
 
     def save(self, *args, **kwargs):
         data = self.deploy()
-
-        self.url = data['app_url']
-        self.deploy_id = self.project.name + data['uuid']
-        self.status = data['status']
-        super(Deployment, self).save(*args, **kwargs)
+        if data['success']:
+            self.url = data['app_url']
+            self.deploy_id = data['name']
+            self.status = data['status']
+            super(Deployment, self).save(*args, **kwargs)
+            if self.email:
+                send_mail('Deployment successful', 'Application URL: {0}'.format(data['app_url']),
+                          'info@deployer.com', [self.email])
 
     def deploy(self):
         li = Openshift(
@@ -48,7 +52,7 @@ class Deployment(models.Model):
         )
         random_string = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(10))
         status, res = li.app_create(
-            app_name="{0}_{1}".format(self.project.name, random_string),
+            app_name=self.project.name + random_string,
             app_type=self.project.cartridges_list(),
             init_git_url=self.project.github_url
         )
@@ -58,8 +62,9 @@ class Deployment(models.Model):
         if status == 201:
             print data
             return_data['success'] = True
-            return_data['success'] = data['data'].get('app_url')
-            return_data['success'] = data.get('status')
+            return_data['app_url'] = data['data'].get('app_url')
+            return_data['name'] = data['data'].get('name')
+            return_data['status'] = data.get('status')
         else:
             return_data['success'] = False
             return_data['message'] = data['messages'][0]['text']
