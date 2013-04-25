@@ -42,6 +42,7 @@ var AppView = Backbone.View.extend({
 
     deploy: function(e) {
         $("#info-message").show();
+        this.$("button[type=submit]").hide();
         var project_uri = this.$('select[name=project]').val();
         var email = this.$('input[name=email]').val();
         var deploy = new Deployment({
