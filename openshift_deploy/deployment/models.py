@@ -1,6 +1,6 @@
+import django_rq
 import pusher
-import random
-import string
+import time
 from django.conf import settings
 from django.core.mail import send_mail
 from django.db import models
@@ -22,26 +22,27 @@ class Project(models.Model):
 
 
 class Deployment(models.Model):
+    STATUS_CHOICES = (
+        ('Deploying', 'Deploying'),
+        ('Completed', 'Completed'),
+        ('Failed', 'Failed'),
+    )
     project = models.ForeignKey(Project, related_name='deployments')
     url = models.CharField(max_length=200)
     email = models.EmailField()
     deploy_id = models.CharField(max_length=100)
     launch_date = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=50)
+    status = models.CharField(max_length=50, choices=STATUS_CHOICES,
+                              default='Deploying')
 
     def __unicode__(self):
         return self.deploy_id
 
     def save(self, *args, **kwargs):
-        data = self.deploy()
-        if data['success']:
-            self.url = data['app_url']
-            self.deploy_id = data['name']
-            self.status = data['status']
-            super(Deployment, self).save(*args, **kwargs)
-            if self.email:
-                send_mail('Deployment successful', 'Application URL: {0}'.format(data['app_url']),
-                          'info@deployer.com', [self.email])
+        if not self.id:
+            django_rq.enqueue(self.deploy)
+        self.status = 'Deploying'
+        super(Deployment, self).save(*args, **kwargs)
 
     def deploy(self):
         instance = pusher.Pusher(
@@ -56,26 +57,34 @@ class Deployment(models.Model):
             debug=settings.OPENSHIFT_DEBUG,
             verbose=settings.OPENSHIFT_VERBOSE
         )
-        random_string = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(10))
-        app_name = self.project.name + random_string
-        instance['deployment'].trigger('info_update', {
-            'app_name': app_name,
+        instance[self.deploy_id].trigger('info_update', {
             'message': "Creating a new app...",
-            'percent': 50
+            'percent': 30
         })
         status, res = li.app_create(
-            app_name=app_name,
+            app_name=self.deploy_id,
             app_type=self.project.cartridges_list(),
             init_git_url=self.project.github_url
         )
+        instance[self.deploy_id].trigger('info_update', {
+            'message': "Getting results...",
+            'percent': 60
+        })
         data = res()
-        return_data = {}
         if status == 201:
-            return_data['success'] = True
-            return_data['app_url'] = data['data'].get('app_url')
-            return_data['name'] = data['data'].get('name')
-            return_data['status'] = data.get('status')
+            app_url = data['data'].get('app_url')
+            self.status = 'Completed'
+            self.app_url = app_url
+            instance[self.deploy_id].trigger('deployment_complete', {
+                'message': "Deployment complete!",
+                'app_url': app_url
+            })
+            if self.email:
+                send_mail('Deployment successful', 'Application URL: {0}'.format(app_url),
+                          'info@deployer.com', [self.email], fail_silently=True)
         else:
-            return_data['success'] = False
-            return_data['message'] = data['messages'][0]['text']
-        return return_data
+            self.status = 'Failed'
+            instance[self.deploy_id].trigger('deployment_failed', {
+                'message': "Deployment failed!",
+            })
+        super(Deployment, self).save()

@@ -125,6 +125,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     # Third-party apps
+    'django_rq',
     'tastypie',
 
     # Project apps
@@ -158,6 +159,15 @@ LOGGING = {
             'propagate': True,
         },
     }
+}
+
+# Redis queues
+RQ_QUEUES = {
+    'default': {
+        'HOST': 'localhost',
+        'PORT': 6379,
+        'DB': 0,
+    },
 }
 
 # Email settings

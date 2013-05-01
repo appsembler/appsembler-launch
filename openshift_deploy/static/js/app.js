@@ -24,10 +24,7 @@ var AppView = Backbone.View.extend({
         "submit form.form-deploy": "deploy"
     },
 
-    channel: pusher.subscribe('deployment'),
-
     initialize: function() {
-        this.channel.bind('info_update', this.updateInfoStatus);
         this.projects = new ProjectList();
         var _this = this;
         this.projects.fetch().complete(function() {
@@ -47,13 +44,19 @@ var AppView = Backbone.View.extend({
     deploy: function(e) {
         var project_uri = this.$('select[name=project]').val();
         var email = this.$('input[name=email]').val();
+        var deploy_id = $("#project_select option:selected").text() + Math.random().toString(36).substr(2,16);
+        this.channel = pusher.subscribe(deploy_id);
+        this.channel.bind('info_update', this.updateInfoStatus);
+        this.channel.bind('deployment_complete', this.deploymentSuccess);
+        this.channel.bind('deployment_failed', this.deploymentFail);
+
         var deploy = new Deployment({
             project: project_uri,
-            email: email
+            email: email,
+            deploy_id: deploy_id
         });
         this.showInfoWindow();
         deploy.save({}, {
-            success: this.deploymentSuccess,
             error: this.deploymentFail
         });
         e.preventDefault();
@@ -64,24 +67,28 @@ var AppView = Backbone.View.extend({
     },
 
     updateInfoStatus: function(data) {
+        console.log(data);
         $("#info-message").text(data.message);
         $(".bar").width(data.percent + "%");
     },
 
-    deploymentSuccess: function(model, response, options) {
+    deploymentSuccess: function(data) {
         $("div.progress").hide();
         $("img.spinner").hide();
         var $info = $("#info-message-section");
         $info.removeClass('alert-info').addClass('alert-success');
-        $info.html('<i class="icon-ok"></i> Your deployment was successful!');
-        var app_link = '<a class="app-url" href="' + model.get('url') + '">' + model.get('url') + '</a>';
+        console.log(data);
+        $info.html('<i class="icon-ok"></i>' + data['message']);
+        var app_link = '<a class="app-url" href="' + data['app_url'] + '">' + data['app_url'] + '</a>';
         $(app_link).insertAfter($info);
     },
 
-    deploymentFail: function(model, xhr, options) {
+    deploymentFail: function(data) {
+        $("div.progress").hide();
+        $("img.spinner").hide();
         var $info = $("#info-message-section");
         $info.removeClass('alert-info').addClass('alert-error');
-        $info.html('<i class="icon-remove"></i> An error occurred!');
+        $info.html('<i class="icon-remove"></i>' + data['message']);
     }
 });
 
