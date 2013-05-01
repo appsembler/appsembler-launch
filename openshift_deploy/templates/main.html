@@ -19,7 +19,6 @@
     <script src="{% static "js/app.js" %}"></script>
 
     <!-- Templates -->
-    {% verbatim %}
     <script type="text/template" id="project_form_template">
       <form class="form-deploy" method="post">
         <h3 class="form-deploy-heading">Pick your weapon</h3>
@@ -33,12 +32,21 @@
           <span class="add-on"><i class="icon-envelope"></i></span>
           <input type="text" name="email" value="" placeholder="name@domain.com">  
         </div>
-        <div class="alert alert-info" id="info-message">
-          <i class="icon-wrench"></i> Cloning the code...
-        </div>
         <button class="btn btn-success" type="submit">Fire away!</button>
       </form>
     </script>
-    {% endverbatim %}
+
+    <script type="text/template" id="deploy_status_template">
+    <div class="form-deploy">
+      <img src="{% static "img/ajax-loader.gif" %}" alt="loader">
+      <h3>Working some magic...</h3>
+      <div class="progress progress-striped active">
+        <div class="bar" style="width: 20%;"></div>
+      </div>
+      <div class="alert alert-info" id="info-message">
+        <i class="icon-wrench"></i> Cloning the code...
+      </div>
+    </div>
+    </script>    
   </body>
 </html>
