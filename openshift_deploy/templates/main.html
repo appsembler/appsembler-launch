@@ -12,6 +12,7 @@
     <div class="container"></div> <!-- /container -->
 
     <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="http://js.pusher.com/2.0/pusher.min.js"></script>
     <script src="{% static "js/bootstrap.js" %}"></script>
     <script src="{% static "js/json2.js" %}"></script>
     <script src="{% static "js/underscore.js" %}"></script>
@@ -38,13 +39,13 @@
 
     <script type="text/template" id="deploy_status_template">
     <div class="form-deploy">
-      <img src="{% static "img/ajax-loader.gif" %}" alt="loader">
+      <img src="{% static "img/ajax-loader.gif" %}" alt="loader" class="spinner">
       <h3>Working some magic...</h3>
       <div class="progress progress-striped active">
-        <div class="bar" style="width: 20%;"></div>
+        <div class="bar" style="width: 5%;"></div>
       </div>
-      <div class="alert alert-info" id="info-message">
-        <i class="icon-wrench"></i> Cloning the code...
+      <div class="alert alert-info" id="info-message-section">
+        <i class="icon-wrench"></i><span id="info-message">Starting deployment...</span>
       </div>
     </div>
     </script>    

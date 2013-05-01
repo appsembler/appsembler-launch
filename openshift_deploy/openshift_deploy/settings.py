@@ -162,14 +162,19 @@ LOGGING = {
 
 # Email settings
 EMAIL_HOST = 'mail.kset.org'
-EMAIL_HOST_USER = ''
+EMAIL_HOST_USER = 'noidea@kset.org'
 EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # OpenShift settings
 OPENSHIFT_HOST = 'openshift.redhat.com'
-OPENSHIFT_USER = ''
+OPENSHIFT_USER = 'filip.ccusa@gmail.com'
 OPENSHIFT_PASSWORD = ''
 OPENSHIFT_DEBUG = True
 OPENSHIFT_VERBOSE = True
+
+# Pusher settings
+PUSHER_APP_ID = '43043'
+PUSHER_APP_KEY = ''
+PUSHER_APP_SECRET = ''

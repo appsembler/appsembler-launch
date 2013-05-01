@@ -1,3 +1,4 @@
+import pusher
 import random
 import string
 from django.conf import settings
@@ -43,6 +44,11 @@ class Deployment(models.Model):
                           'info@deployer.com', [self.email])
 
     def deploy(self):
+        instance = pusher.Pusher(
+            app_id=settings.PUSHER_APP_ID,
+            key=settings.PUSHER_APP_KEY,
+            secret=settings.PUSHER_APP_SECRET
+        )
         li = Openshift(
             host=settings.OPENSHIFT_HOST,
             user=settings.OPENSHIFT_USER,
@@ -51,16 +57,20 @@ class Deployment(models.Model):
             verbose=settings.OPENSHIFT_VERBOSE
         )
         random_string = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(10))
+        app_name = self.project.name + random_string
+        instance['deployment'].trigger('info_update', {
+            'app_name': app_name,
+            'message': "Creating a new app...",
+            'percent': 50
+        })
         status, res = li.app_create(
-            app_name=self.project.name + random_string,
+            app_name=app_name,
             app_type=self.project.cartridges_list(),
             init_git_url=self.project.github_url
         )
-
         data = res()
         return_data = {}
         if status == 201:
-            print data
             return_data['success'] = True
             return_data['app_url'] = data['data'].get('app_url')
             return_data['name'] = data['data'].get('name')

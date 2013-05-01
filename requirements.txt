@@ -1,8 +1,12 @@
 Django==1.5.1
 -e git://github.com/toastdriven/django-tastypie.git@6efdea7e1ec5846255e9b4c8b1faf5722e364eba#egg=django_tastypie-dev
+ipdb==0.7
+ipython==0.13.2
 mimeparse==0.1.3
+pusher==0.7
 -e git+git@github.com:natea/python-interface.git@2f3eec0f9f9548eec48e8c9d04bcdc1151163c78#egg=pyopenshift-dev
 python-dateutil==2.1
+readline==6.2.4.1
 requests==1.2.0
 six==1.3.0
 wsgiref==0.1.2

@@ -1,4 +1,5 @@
 var API_ROOT = '/api/v1/';
+var pusher = new Pusher('bb4a670d8f7a12112716');
 
 // Models
 var Project = Backbone.Model.extend({});
@@ -23,7 +24,10 @@ var AppView = Backbone.View.extend({
         "submit form.form-deploy": "deploy"
     },
 
+    channel: pusher.subscribe('deployment'),
+
     initialize: function() {
+        this.channel.bind('info_update', this.updateInfoStatus);
         this.projects = new ProjectList();
         var _this = this;
         this.projects.fetch().complete(function() {
@@ -41,26 +45,33 @@ var AppView = Backbone.View.extend({
     },
 
     deploy: function(e) {
-        e.preventDefault();
-        this.showInfoWindow();
         var project_uri = this.$('select[name=project]').val();
         var email = this.$('input[name=email]').val();
         var deploy = new Deployment({
             project: project_uri,
             email: email
         });
-        /*deploy.save({}, {
+        this.showInfoWindow();
+        deploy.save({}, {
             success: this.deploymentSuccess,
             error: this.deploymentFail
-        });*/
+        });
+        e.preventDefault();
     },
 
     showInfoWindow: function() {
         this.$el.html($("#deploy_status_template").html());
     },
 
+    updateInfoStatus: function(data) {
+        $("#info-message").text(data.message);
+        $(".bar").width(data.percent + "%");
+    },
+
     deploymentSuccess: function(model, response, options) {
-        var $info = $("#info-message");
+        $("div.progress").hide();
+        $("img.spinner").hide();
+        var $info = $("#info-message-section");
         $info.removeClass('alert-info').addClass('alert-success');
         $info.html('<i class="icon-ok"></i> Your deployment was successful!');
         var app_link = '<a class="app-url" href="' + model.get('url') + '">' + model.get('url') + '</a>';
@@ -68,7 +79,7 @@ var AppView = Backbone.View.extend({
     },
 
     deploymentFail: function(model, xhr, options) {
-        var $info = $("#info-message");
+        var $info = $("#info-message-section");
         $info.removeClass('alert-info').addClass('alert-error');
         $info.html('<i class="icon-remove"></i> An error occurred!');
     }
