@@ -71,6 +71,7 @@ class Deployment(models.Model):
             'percent': 60
         })
         data = res()
+        print data
         if status == 201:
             app_url = data['data'].get('app_url')
             self.status = 'Completed'
@@ -86,5 +87,6 @@ class Deployment(models.Model):
             self.status = 'Failed'
             instance[self.deploy_id].trigger('deployment_failed', {
                 'message': "Deployment failed!",
+                'details': data['messages'][0]['text']
             })
         super(Deployment, self).save()
