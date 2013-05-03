@@ -4,7 +4,7 @@ import time
 from django.conf import settings
 from django.core.mail import send_mail
 from django.db import models
-from oshift import Openshift
+from oshift import Openshift, OpenShiftException
 
 
 class Project(models.Model):
@@ -45,33 +45,27 @@ class Deployment(models.Model):
         super(Deployment, self).save(*args, **kwargs)
 
     def deploy(self):
-        instance = pusher.Pusher(
-            app_id=settings.PUSHER_APP_ID,
-            key=settings.PUSHER_APP_KEY,
-            secret=settings.PUSHER_APP_SECRET
-        )
-        li = Openshift(
-            host=settings.OPENSHIFT_HOST,
-            user=settings.OPENSHIFT_USER,
-            passwd=settings.OPENSHIFT_PASSWORD,
-            debug=settings.OPENSHIFT_DEBUG,
-            verbose=settings.OPENSHIFT_VERBOSE
-        )
+        instance = self._get_pusher_instance()
+        li = self._get_openshift_instance()
         instance[self.deploy_id].trigger('info_update', {
             'message': "Creating a new app...",
             'percent': 30
         })
-        status, res = li.app_create(
-            app_name=self.deploy_id,
-            app_type=self.project.cartridges_list(),
-            init_git_url=self.project.github_url
-        )
+        message = None
+        try:
+            status, res = li.app_create(
+                app_name=self.deploy_id,
+                app_type=self.project.cartridges_list(),
+                init_git_url=self.project.github_url
+            )
+            data = res()
+        except OpenShiftException, e:
+            status = 500
+            message = "A critical error has occured."
         instance[self.deploy_id].trigger('info_update', {
             'message': "Getting results...",
             'percent': 60
         })
-        data = res()
-        print data
         if status == 201:
             app_url = data['data'].get('app_url')
             self.status = 'Completed'
@@ -87,6 +81,24 @@ class Deployment(models.Model):
             self.status = 'Failed'
             instance[self.deploy_id].trigger('deployment_failed', {
                 'message': "Deployment failed!",
-                'details': data['messages'][0]['text']
+                'details': message if message else data['messages'][0]['text']
             })
         super(Deployment, self).save()
+
+    def _get_openshift_instance(self):
+        openshift = Openshift(
+            host=settings.OPENSHIFT_HOST,
+            user=settings.OPENSHIFT_USER,
+            passwd=settings.OPENSHIFT_PASSWORD,
+            debug=settings.OPENSHIFT_DEBUG,
+            verbose=settings.OPENSHIFT_VERBOSE
+        )
+        return openshift
+
+    def _get_pusher_instance(self):
+        push = pusher.Pusher(
+            app_id=settings.PUSHER_APP_ID,
+            key=settings.PUSHER_APP_KEY,
+            secret=settings.PUSHER_APP_SECRET
+        )
+        return push
