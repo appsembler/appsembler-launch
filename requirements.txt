@@ -5,7 +5,7 @@ ipdb==0.7
 ipython==0.13.2
 mimeparse==0.1.3
 pusher==0.7
--e git+git@github.com:natea/python-interface.git@2f3eec0f9f9548eec48e8c9d04bcdc1151163c78#egg=pyopenshift-dev
+-e git://github.com/openshift/python-interface.git@dc97ec52cbd42b5ef168a68f9d571ec609e7b9b0#egg=pyopenshift-dev
 python-dateutil==2.1
 pytz==2013b
 readline==6.2.4.1
