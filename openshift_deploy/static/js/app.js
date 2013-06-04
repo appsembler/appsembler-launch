@@ -1,3 +1,9 @@
+function validateEmail(email)
+{
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
+}
+
 var API_ROOT = '/api/v1/';
 var pusher = new Pusher('bb4a670d8f7a12112716');
 
@@ -13,7 +19,13 @@ var ProjectList = Backbone.Collection.extend({
 });
 
 var Deployment = Backbone.Model.extend({
-    url: API_ROOT + 'deployments/'
+    url: API_ROOT + 'deployments/',
+    validate: function(attrs, options) {
+        var re = /\S+@\S+\.\S+/;
+        if(attrs.email === "" || !re.test(attrs.email)) {
+            return "You must enter an email address!";
+        }
+    }
 });
 
 // Views
@@ -42,6 +54,7 @@ var AppView = Backbone.View.extend({
     },
 
     deploy: function(e) {
+        e.preventDefault();
         var project_uri = this.$('select[name=project]').val();
         var email = this.$('input[name=email]').val();
         var deploy_id = $("#project_select option:selected").text() + Math.random().toString(36).substr(2,16);
@@ -55,11 +68,18 @@ var AppView = Backbone.View.extend({
             email: email,
             deploy_id: deploy_id
         });
-        this.showInfoWindow();
-        deploy.save({}, {
-            error: this.deploymentFail
-        });
-        e.preventDefault();
+        if(deploy.isValid()) {
+            this.showInfoWindow();
+            deploy.save({}, {
+                error: this.deploymentFail
+            });
+        }
+        else {
+            this.$('div.control-group').addClass('error');
+            var $input = this.$('#email_input').parent();
+            var errorMessage = '<span class="help-inline">' + deploy.validationError + '</span>';
+            $(errorMessage).insertAfter($input);
+        }   
     },
 
     showInfoWindow: function() {
