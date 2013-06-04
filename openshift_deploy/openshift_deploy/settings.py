@@ -1,5 +1,6 @@
 from os.path import join, abspath, dirname
-
+import djcelery
+djcelery.setup_loader()
 
 PROJECT_ROOT = join(abspath(dirname(__file__)), '..')
 root = lambda *x: join(abspath(PROJECT_ROOT), *x)
@@ -125,8 +126,9 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     # Third-party apps
-    'django_rq',
     'tastypie',
+    'djcelery',
+    'kombu.transport.django',
 
     # Project apps
     'deployment',
@@ -161,30 +163,25 @@ LOGGING = {
     }
 }
 
-# Redis queues
-RQ_QUEUES = {
-    'default': {
-        'HOST': 'localhost',
-        'PORT': 6379,
-        'DB': 0,
-    },
-}
+# Celery config
+BROKER_URL = 'django://'
+
 
 # Email settings
 EMAIL_HOST = 'mail.kset.org'
 EMAIL_HOST_USER = 'noidea@kset.org'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = 'boskobuha13'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # OpenShift settings
 OPENSHIFT_HOST = 'openshift.redhat.com'
 OPENSHIFT_USER = 'filip.ccusa@gmail.com'
-OPENSHIFT_PASSWORD = ''
+OPENSHIFT_PASSWORD = 'kikiriki'
 OPENSHIFT_DEBUG = True
 OPENSHIFT_VERBOSE = True
 
 # Pusher settings
 PUSHER_APP_ID = '43043'
-PUSHER_APP_KEY = ''
-PUSHER_APP_SECRET = ''
+PUSHER_APP_KEY = 'bb4a670d8f7a12112716'
+PUSHER_APP_SECRET = '61badd74df0dfaa96a8a'

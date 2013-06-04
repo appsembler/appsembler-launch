@@ -1,9 +1,9 @@
-import django_rq
 import pusher
 from django.conf import settings
 from django.core.mail import send_mail
 from django.db import models
 from oshift import Openshift, OpenShiftException
+from deployment.tasks import deploy
 
 
 class Project(models.Model):
@@ -39,7 +39,7 @@ class Deployment(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.id:
-            django_rq.enqueue(self.deploy)
+            deploy.delay(self)
         self.status = 'Deploying'
         super(Deployment, self).save(*args, **kwargs)
 

@@ -7,7 +7,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'^api/', include(v1_api.urls)),
-    url(r'^django-rq/', include('django_rq.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', MainView.as_view(), name='main'),
 )
