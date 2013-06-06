@@ -1,22 +1,172 @@
 [
 {
-  "pk": 1, 
-  "model": "deployment.project", 
+  "pk": 1,
+  "model": "deployment.project",
   "fields": {
-    "github_url": "https://github.com/openshift/wordpress-example", 
-    "version": "php-5.3", 
-    "name": "Wordpress", 
+    "github_url": "https://github.com/openshift/wordpress-example",
+    "version": "php-5.3",
+    "name": "Wordpress",
     "database": "mysql-5.1"
   }
 },
 {
-  "pk": 2, 
-  "model": "deployment.project", 
+  "pk": 2,
+  "model": "deployment.project",
   "fields": {
-    "github_url": "https://github.com/openshift/drupal-quickstart.git", 
-    "version": "php-5.3, cron", 
-    "name": "Drupal", 
+    "github_url": "https://github.com/openshift/drupal-quickstart.git",
+    "version": "php-5.3, cron",
+    "name": "Drupal",
     "database": "mysql-5.1"
+  }
+},
+{
+  "pk": 4,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "git://github.com/openshift/mediawiki-example.git",
+    "version": "php-5.3",
+    "name": "Mediawiki",
+    "database": "mysql-5.1"
+  }
+},
+{
+  "pk": 5,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "git://github.com/openshift/dokuwiki-quickstart.git",
+    "version": "php-5.3",
+    "name": "Dokuwiki",
+    "database": ""
+  }
+},
+{
+  "pk": 6,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "git://github.com/openshift/elgg-openshift-quickstart.git",
+    "version": "php-5.3",
+    "name": "Elgg",
+    "database": "mysql-5.1"
+  }
+},
+{
+  "pk": 7,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "git://github.com/openshift/CodeIgniterQuickStart.git",
+    "version": "php-5.3",
+    "name": "Codeigniter",
+    "database": "mysql-5.1"
+  }
+},
+{
+  "pk": 8,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "git://github.com/openshift/piwik-openshift-quickstart.git",
+    "version": "php-5.3",
+    "name": "Piwik",
+    "database": "mysql-5.1"
+  }
+},
+{
+  "pk": 9,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "git://github.com/openshift/sqlbuddy-openshift-quickstart.git",
+    "version": "php-5.3",
+    "name": "SQLBuddy",
+    "database": "mysql-5.1"
+  }
+},
+{
+  "pk": 10,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "git://github.com/openshift/ironmq-openshift-quickstart.git",
+    "version": "ruby-1.9",
+    "name": "IronMQ",
+    "database": ""
+  }
+},
+{
+  "pk": 12,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "git://github.com/openshift/mongolab-openshift-quickstart.git",
+    "version": "nodejs-0.6",
+    "name": "MongoLab",
+    "database": ""
+  }
+},
+{
+  "pk": 13,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "git://github.com/openshift/OSQA-openshift-quickstart.git",
+    "version": "python-2.6",
+    "name": "OSQA",
+    "database": "mysql-5.1"
+  }
+},
+{
+  "pk": 14,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "git://github.com/openshift/BookMarks-openshift-quickstart.git",
+    "version": "python-2.6",
+    "name": "BookMarks",
+    "database": "mysql-5.1"
+  }
+},
+{
+  "pk": 16,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "git://github.com/openshift/owncloud-openshift-quickstart.git",
+    "version": "php-5.3",
+    "name": "ownCloud",
+    "database": "mysql-5.1"
+  }
+},
+{
+  "pk": 18,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "git://github.com/openshift/weinre-quickstart.git",
+    "version": "diy-0.1",
+    "name": "Weinre",
+    "database": ""
+  }
+},
+{
+  "pk": 19,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "git://github.com/openshift/rails-example.git",
+    "version": "ruby-1.9",
+    "name": "Rails",
+    "database": "mysql-5.1"
+  }
+},
+{
+  "pk": 20,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "git://github.com/openshift/capedwarf-example.git",
+    "version": "jbossas-7",
+    "name": "CapeDwarf",
+    "database": ""
+  }
+},
+{
+  "pk": 21,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "git://github.com/openshift/bottle-openshift-quickstart.git",
+    "version": "python-2.6",
+    "name": "Bottle",
+    "database": ""
   }
 }
 ]
