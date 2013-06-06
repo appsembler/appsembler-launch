@@ -57,7 +57,9 @@ var AppView = Backbone.View.extend({
         e.preventDefault();
         var project_uri = this.$('select[name=project]').val();
         var email = this.$('input[name=email]').val();
+        // creates a deployment app name from the project name and random characters
         var deploy_id = $("#project_select option:selected").text() + Math.random().toString(36).substr(2,16);
+        deploy_id = deploy_id.replace(' ', '_');
         this.channel = pusher.subscribe(deploy_id);
         this.channel.bind('info_update', this.updateInfoStatus);
         this.channel.bind('deployment_complete', this.deploymentSuccess);
