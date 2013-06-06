@@ -16,7 +16,9 @@ class Project(models.Model):
         return self.name
 
     def cartridges_list(self):
-        complete_list = self.version + "," + self.database
+        complete_list = self.version
+        if self.database:
+            complete_list += ("," + self.database)
         return [v.strip() for v in complete_list.split(',')]
 
 
