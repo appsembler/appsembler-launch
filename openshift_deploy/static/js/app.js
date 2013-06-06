@@ -79,7 +79,7 @@ var AppView = Backbone.View.extend({
             var $input = this.$('#email_input').parent();
             var errorMessage = '<span class="help-inline">' + deploy.validationError + '</span>';
             $(errorMessage).insertAfter($input);
-        }   
+        }
     },
 
     showInfoWindow: function() {
