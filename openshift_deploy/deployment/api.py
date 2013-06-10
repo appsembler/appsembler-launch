@@ -8,6 +8,7 @@ class ProjectResource(ModelResource):
     class Meta:
         resource_name = 'projects'
         queryset = Project.objects.all().order_by('name')
+        limit = 0
         authorization = Authorization()
 
 
