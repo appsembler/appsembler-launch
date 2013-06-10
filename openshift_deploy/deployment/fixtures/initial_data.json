@@ -110,16 +110,6 @@
   }
 },
 {
-  "pk": 14,
-  "model": "deployment.project",
-  "fields": {
-    "github_url": "git://github.com/openshift/BookMarks-openshift-quickstart.git",
-    "version": "python-2.6",
-    "name": "BookMarks",
-    "database": "mysql-5.1"
-  }
-},
-{
   "pk": 16,
   "model": "deployment.project",
   "fields": {
@@ -127,16 +117,6 @@
     "version": "php-5.3",
     "name": "ownCloud",
     "database": "mysql-5.1"
-  }
-},
-{
-  "pk": 18,
-  "model": "deployment.project",
-  "fields": {
-    "github_url": "git://github.com/openshift/weinre-quickstart.git",
-    "version": "diy-0.1",
-    "name": "Weinre",
-    "database": ""
   }
 },
 {
@@ -166,6 +146,76 @@
     "github_url": "git://github.com/openshift/bottle-openshift-quickstart.git",
     "version": "python-2.6",
     "name": "Bottle",
+    "database": ""
+  }
+},
+{
+  "pk": 22,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "git://github.com/openshift/redmine-openshift-quickstart.git",
+    "version": "ruby-1.9",
+    "name": "Redmine",
+    "database": "mysql-5.1"
+  }
+},
+{
+  "pk": 23,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "git://github.com/openshift/magento-example.git",
+    "version": "php-5.3",
+    "name": "Magento",
+    "database": "mysql-5.1"
+  }
+},
+{
+  "pk": 24,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "https://github.com/openshift/nestacms-example",
+    "version": "ruby-1.9",
+    "name": "NestaCMS",
+    "database": "mysql-5.1"
+  }
+},
+{
+  "pk": 26,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "https://github.com/openshift/joomla-example",
+    "version": "php-5.3",
+    "name": "Joomla",
+    "database": "mysql-5.1"
+  }
+},
+{
+  "pk": 27,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "https://github.com/openshift/reviewboard-example",
+    "version": "python-2.7",
+    "name": "Reviewboard",
+    "database": "mysql-5.1"
+  }
+},
+{
+  "pk": 28,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "https://github.com/openshift/sugarcrm-example",
+    "version": "php-5.3",
+    "name": "SugarCRM",
+    "database": "mysql-5.1"
+  }
+},
+{
+  "pk": 29,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "https://github.com/kagesenshi/plone-openshift-quickstart",
+    "version": "python-2.7",
+    "name": "Plone",
     "database": ""
   }
 }
