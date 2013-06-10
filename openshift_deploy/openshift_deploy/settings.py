@@ -169,19 +169,19 @@ BROKER_URL = 'django://'
 
 # Email settings
 EMAIL_HOST = 'mail.kset.org'
-EMAIL_HOST_USER = 'noidea@kset.org'
-EMAIL_HOST_PASSWORD = 'boskobuha13'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # OpenShift settings
 OPENSHIFT_HOST = 'openshift.redhat.com'
-OPENSHIFT_USER = 'filip.ccusa@gmail.com'
-OPENSHIFT_PASSWORD = 'kikiriki'
+OPENSHIFT_USER = ''
+OPENSHIFT_PASSWORD = ''
 OPENSHIFT_DEBUG = True
 OPENSHIFT_VERBOSE = True
 
 # Pusher settings
 PUSHER_APP_ID = '43043'
-PUSHER_APP_KEY = 'bb4a670d8f7a12112716'
-PUSHER_APP_SECRET = '61badd74df0dfaa96a8a'
+PUSHER_APP_KEY = ''
+PUSHER_APP_SECRET = ''
