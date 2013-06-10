@@ -74,7 +74,8 @@ class Deployment(models.Model):
             'percent': 60
         })
         if status == 201:
-            self.url = data['data'].get('app_url')
+            app_url = data['data'].get('app_url')
+            self.url = app_url
             self.status = 'Completed'
             instance[self.deploy_id].trigger('deployment_complete', {
                 'message': "Deployment complete!",
