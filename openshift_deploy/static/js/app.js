@@ -57,8 +57,9 @@ var AppView = Backbone.View.extend({
         e.preventDefault();
         var project_uri = this.$('select[name=project]').val();
         var email = this.$('input[name=email]').val();
+        var app_name = $("#project_select option:selected").text();
         // creates a deployment app name from the project name and random characters
-        var deploy_id = $("#project_select option:selected").text() + Math.random().toString(36).substr(2,16);
+        var deploy_id = app_name + Math.random().toString(36).substr(2,16);
         deploy_id = deploy_id.replace(' ', '');
         this.channel = pusher.subscribe(deploy_id);
         this.channel.bind('info_update', this.updateInfoStatus);
@@ -71,7 +72,7 @@ var AppView = Backbone.View.extend({
             deploy_id: deploy_id
         });
         if(deploy.isValid()) {
-            this.showInfoWindow();
+            this.showInfoWindow(app_name);
             deploy.save({}, {
                 error: this.deploymentFail
             });
@@ -84,8 +85,11 @@ var AppView = Backbone.View.extend({
         }
     },
 
-    showInfoWindow: function() {
-        this.$el.html($("#deploy_status_template").html());
+    showInfoWindow: function(app_name) {
+        var template = _.template($("#deploy_status_template").html(), {
+            app_name: app_name
+        });
+        this.$el.html(template);
     },
 
     updateInfoStatus: function(data) {
