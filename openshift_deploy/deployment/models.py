@@ -40,10 +40,16 @@ class Deployment(models.Model):
         return self.deploy_id
 
     def save(self, *args, **kwargs):
+        """
+        Save the object with the "deploying" status to the DB to get
+        the ID, and use that in a celery deploy task
+        """
         if not self.id:
-            deploy.delay(self)
-        self.status = 'Deploying'
+            self.status = 'Deploying'
         super(Deployment, self).save(*args, **kwargs)
+        if self.status == 'Deploying':
+            deploy.delay(self)
+
 
     def deploy(self):
         instance = self._get_pusher_instance()
@@ -84,7 +90,7 @@ class Deployment(models.Model):
                 'message': "Deployment failed!",
                 'details': message if message else data['messages'][0]['text']
             })
-        super(Deployment, self).save()
+        self.save()
 
     def _get_openshift_instance(self):
         openshift = Openshift(
