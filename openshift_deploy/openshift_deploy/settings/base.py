@@ -1,8 +1,23 @@
+import os
 from os.path import join, abspath, dirname
+from django.core.exceptions import ImproperlyConfigured
+
+
+def get_env_variable(var_name):
+    """ Get the environment variable or return exception """
+    try:
+        return os.environ[var_name]
+    except KeyError:
+        error_msg = "Set the %s environment variable" % var_name
+        raise ImproperlyConfigured(error_msg)
+
+
 import djcelery
 djcelery.setup_loader()
 
-PROJECT_ROOT = join(abspath(dirname(__file__)), '..')
+# utility functions for handling paths inside the project
+here = lambda *x: join(abspath(dirname(__file__)), *x)
+PROJECT_ROOT = here("..", "..")
 root = lambda *x: join(abspath(PROJECT_ROOT), *x)
 
 
@@ -29,7 +44,10 @@ DATABASES = {
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '.rhcloud.com',
+    '.appsembler.com',
+]
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -87,7 +105,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'x$xj&r_u_nbe!kzyldg@*kx1bnme0k)cdtxsf-f_fs@i)40bsj'
+SECRET_KEY = get_env_variable('SECRET_KEY')
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -169,19 +187,19 @@ BROKER_URL = 'django://'
 
 # Email settings
 EMAIL_HOST = 'mail.kset.org'
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = get_env_variable('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = get_env_variable('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 # OpenShift settings
 OPENSHIFT_HOST = 'openshift.redhat.com'
-OPENSHIFT_USER = ''
-OPENSHIFT_PASSWORD = ''
+OPENSHIFT_USER = get_env_variable('OPENSHIFT_USER')
+OPENSHIFT_PASSWORD = get_env_variable('OPENSHIFT_PASSWORD')
 OPENSHIFT_DEBUG = True
 OPENSHIFT_VERBOSE = True
 
 # Pusher settings
 PUSHER_APP_ID = '43043'
-PUSHER_APP_KEY = ''
-PUSHER_APP_SECRET = ''
+PUSHER_APP_KEY = get_env_variable('PUSHER_APP_KEY')
+PUSHER_APP_SECRET = get_env_variable('PUSHER_APP_SECRET')
