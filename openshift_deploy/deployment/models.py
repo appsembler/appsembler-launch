@@ -12,7 +12,7 @@ class Project(models.Model):
     github_url = models.CharField(max_length=200)
     version = models.CharField(max_length=300)
     database = models.CharField(max_length=300, blank=True)
-    slug = models.SlugField(max_length=40, editable=False, blank=True)
+    slug = models.SlugField(max_length=40, editable=False, blank=True, null=True)
 
     def __unicode__(self):
         return self.name

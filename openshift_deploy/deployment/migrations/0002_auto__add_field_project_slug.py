@@ -10,7 +10,7 @@ class Migration(SchemaMigration):
     def forwards(self, orm):
         # Adding field 'Project.slug'
         db.add_column(u'deployment_project', 'slug',
-                      self.gf('django.db.models.fields.SlugField')(default='', max_length=40, blank=True),
+                      self.gf('django.db.models.fields.SlugField')(null=True, default='', max_length=40),
                       keep_default=False)
 
 
