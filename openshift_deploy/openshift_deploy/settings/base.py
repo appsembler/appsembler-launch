@@ -147,6 +147,7 @@ INSTALLED_APPS = (
     'tastypie',
     'djcelery',
     'kombu.transport.django',
+    'south',
 
     # Project apps
     'deployment',

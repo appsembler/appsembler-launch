@@ -1,4 +1,5 @@
 Django==1.5.1
+South==0.8.1
 amqp==1.0.11
 anyjson==0.3.3
 billiard==2.7.3.28
