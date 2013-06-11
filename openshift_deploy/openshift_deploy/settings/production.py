@@ -15,3 +15,10 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default.
     }
 }
+
+INSTALLED_APPS += (
+    'djrill',
+)
+
+EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
+MANDRILL_API_KEY = "qweGuAVYZPU4kWSZKg6fIw"

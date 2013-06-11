@@ -185,13 +185,6 @@ LOGGING = {
 BROKER_URL = 'django://'
 
 
-# Email settings
-EMAIL_HOST = 'mail.kset.org'
-EMAIL_HOST_USER = get_env_variable('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = get_env_variable('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
 # OpenShift settings
 OPENSHIFT_HOST = 'openshift.redhat.com'
 OPENSHIFT_USER = get_env_variable('OPENSHIFT_USER')
