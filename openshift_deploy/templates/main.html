@@ -19,16 +19,27 @@
     <script src="{% static "js/underscore.js" %}"></script>
     <script src="{% static "js/backbone.js" %}"></script>
     <script src="{% static "js/app.js" %}"></script>
+    <script>
+      apps = {{ apps|safe }};
+    </script>
 
     <!-- Templates -->
     <script type="text/template" id="project_form_template">
       <form class="form-deploy" method="post">
-        <h3 class="form-deploy-heading">Pick your weapon</h3>
-        <select name="project" id="project_select">
-          <% _.each(projects, function(project) { %>
-              <option value="<%= project.resource_uri %>"><%= project.name %></option>
-          <% }); %>
-        </select>
+        {% if app_count > 1 %}
+          <h3 class="form-deploy-heading">Pick a project:</h3>
+          <select name="project" id="project_select">
+            {% verbatim %}
+            <% _.each(projects, function(project) { %>
+                <option value="<%= project.resource_uri %>"><%= project.name %></option>
+            <% }); %>
+            {% endverbatim %}
+          </select>
+        {% else %}
+          {% verbatim %}
+          <h3 class="form-deploy-heading">Deploy <%= project.attributes.name %></h3>
+          {% endverbatim %}
+        {% endif %}
         <h4>Where can we send the URL?</h4>
         <div class="control-group">
           <div class="controls">

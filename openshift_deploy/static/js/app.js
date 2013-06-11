@@ -37,27 +37,48 @@ var AppView = Backbone.View.extend({
     },
 
     initialize: function() {
-        this.projects = new ProjectList();
+        this.projects = new ProjectList(apps);
         var _this = this;
-        this.projects.fetch().complete(function() {
-            _this.render();
-        });
+        _this.render();
 
     },
 
     render: function() {
-        var template = _.template($("#project_form_template").html(), {
-            projects: this.projects.toJSON()
-        });
+        data = {};
+        if (this.projects.length > 1) {
+            data['projects'] = this.projects.toJSON();
+        }
+        else {
+            var project = this.projects.models[0];
+            this.project = project;
+            data['project'] = project;
+        }
+        var template = _.template($("#project_form_template").html(), data);
         this.$el.html(template);
         return this;
     },
 
+    get_app_data: function() {
+        if (this.project) {
+            return {
+                'project_uri': this.project.get('resource_uri'),
+                'app_name': this.project.get('name')
+            };
+        }
+        else {
+            return {
+                'project_uri': this.$('select[name=project]').val(),
+                'app_name': $("#project_select option:selected").text()
+            };
+        }
+    },
+
     deploy: function(e) {
         e.preventDefault();
-        var project_uri = this.$('select[name=project]').val();
+        app_data = this.get_app_data();
+        var project_uri = app_data['project_uri'];
+        var app_name = app_data['app_name'];
         var email = this.$('input[name=email]').val();
-        var app_name = $("#project_select option:selected").text();
         // creates a deployment app name from the project name and random characters
         var deploy_id = app_name + Math.random().toString(36).substr(2,16);
         deploy_id = deploy_id.replace(' ', '');

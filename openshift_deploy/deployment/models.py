@@ -1,6 +1,7 @@
 import pusher
 from django.conf import settings
 from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
 from oshift import Openshift, OpenShiftException
@@ -13,6 +14,9 @@ class Project(models.Model):
     version = models.CharField(max_length=300)
     database = models.CharField(max_length=300, blank=True)
     slug = models.SlugField(max_length=40, editable=False, blank=True, null=True)
+
+    class Meta:
+        ordering = ['name']
 
     def __unicode__(self):
         return self.name
@@ -27,6 +31,9 @@ class Project(models.Model):
         if self.database:
             complete_list += ("," + self.database)
         return [v.strip() for v in complete_list.split(',')]
+
+    def landing_page_url(self):
+        return reverse('landing_page', kwargs={'slug': self.slug})
 
 
 class Deployment(models.Model):
