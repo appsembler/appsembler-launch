@@ -4,6 +4,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "https://github.com/openshift/wordpress-example",
+    "slug": "wordpress",
     "version": "php-5.3",
     "name": "Wordpress",
     "database": "mysql-5.1"
@@ -14,6 +15,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "https://github.com/openshift/drupal-quickstart.git",
+    "slug": "drupal",
     "version": "php-5.3, cron",
     "name": "Drupal",
     "database": "mysql-5.1"
@@ -24,6 +26,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "git://github.com/openshift/mediawiki-example.git",
+    "slug": "mediawiki",
     "version": "php-5.3",
     "name": "Mediawiki",
     "database": "mysql-5.1"
@@ -34,6 +37,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "git://github.com/openshift/dokuwiki-quickstart.git",
+    "slug": "dokuwiki",
     "version": "php-5.3",
     "name": "Dokuwiki",
     "database": ""
@@ -44,6 +48,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "git://github.com/openshift/elgg-openshift-quickstart.git",
+    "slug": "elgg",
     "version": "php-5.3",
     "name": "Elgg",
     "database": "mysql-5.1"
@@ -54,6 +59,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "git://github.com/openshift/CodeIgniterQuickStart.git",
+    "slug": "codeigniter",
     "version": "php-5.3",
     "name": "Codeigniter",
     "database": "mysql-5.1"
@@ -64,6 +70,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "git://github.com/openshift/piwik-openshift-quickstart.git",
+    "slug": "piwik",
     "version": "php-5.3",
     "name": "Piwik",
     "database": "mysql-5.1"
@@ -74,6 +81,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "git://github.com/openshift/sqlbuddy-openshift-quickstart.git",
+    "slug": "sqlbuddy",
     "version": "php-5.3",
     "name": "SQLBuddy",
     "database": "mysql-5.1"
@@ -84,6 +92,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "git://github.com/openshift/ironmq-openshift-quickstart.git",
+    "slug": "ironmq",
     "version": "ruby-1.9",
     "name": "IronMQ",
     "database": ""
@@ -94,6 +103,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "git://github.com/openshift/mongolab-openshift-quickstart.git",
+    "slug": "mongolab",
     "version": "nodejs-0.6",
     "name": "MongoLab",
     "database": ""
@@ -104,6 +114,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "git://github.com/openshift/OSQA-openshift-quickstart.git",
+    "slug": "osqa",
     "version": "python-2.6",
     "name": "OSQA",
     "database": "mysql-5.1"
@@ -114,6 +125,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "git://github.com/openshift/owncloud-openshift-quickstart.git",
+    "slug": "owncloud",
     "version": "php-5.3",
     "name": "ownCloud",
     "database": "mysql-5.1"
@@ -124,6 +136,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "git://github.com/openshift/rails-example.git",
+    "slug": "rails",
     "version": "ruby-1.9",
     "name": "Rails",
     "database": "mysql-5.1"
@@ -134,6 +147,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "git://github.com/openshift/capedwarf-example.git",
+    "slug": "capedwarf",
     "version": "jbossas-7",
     "name": "CapeDwarf",
     "database": ""
@@ -144,6 +158,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "git://github.com/openshift/bottle-openshift-quickstart.git",
+    "slug": "bottle",
     "version": "python-2.6",
     "name": "Bottle",
     "database": ""
@@ -154,6 +169,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "git://github.com/openshift/redmine-openshift-quickstart.git",
+    "slug": "redmine",
     "version": "ruby-1.9",
     "name": "Redmine",
     "database": "mysql-5.1"
@@ -164,6 +180,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "git://github.com/openshift/magento-example.git",
+    "slug": "magento",
     "version": "php-5.3",
     "name": "Magento",
     "database": "mysql-5.1"
@@ -174,6 +191,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "https://github.com/openshift/nestacms-example",
+    "slug": "nestacms",
     "version": "ruby-1.9",
     "name": "NestaCMS",
     "database": "mysql-5.1"
@@ -184,6 +202,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "https://github.com/openshift/joomla-example",
+    "slug": "joomla",
     "version": "php-5.3",
     "name": "Joomla",
     "database": "mysql-5.1"
@@ -194,6 +213,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "https://github.com/openshift/reviewboard-example",
+    "slug": "reviewboard",
     "version": "python-2.7",
     "name": "Reviewboard",
     "database": "mysql-5.1"
@@ -204,6 +224,7 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "https://github.com/openshift/sugarcrm-example",
+    "slug": "sugarcrm",
     "version": "php-5.3",
     "name": "SugarCRM",
     "database": "mysql-5.1"
@@ -214,9 +235,21 @@
   "model": "deployment.project",
   "fields": {
     "github_url": "https://github.com/kagesenshi/plone-openshift-quickstart",
+    "slug": "plone",
     "version": "python-2.7",
     "name": "Plone",
     "database": ""
+  }
+},
+{
+  "pk": 30,
+  "model": "deployment.project",
+  "fields": {
+    "github_url": "https://github.com/stevenolen/ohmage-openshift-quickstart",
+    "slug": "ohmage",
+    "version": "jbossews-2.0",
+    "name": "Ohmage",
+    "database": "mysql-5.1"
   }
 }
 ]
