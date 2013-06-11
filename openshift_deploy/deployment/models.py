@@ -2,6 +2,7 @@ import pusher
 from django.conf import settings
 from django.core.mail import send_mail
 from django.db import models
+from django.template.defaultfilters import slugify
 from oshift import Openshift, OpenShiftException
 from deployment.tasks import deploy
 
@@ -11,9 +12,15 @@ class Project(models.Model):
     github_url = models.CharField(max_length=200)
     version = models.CharField(max_length=300)
     database = models.CharField(max_length=300, blank=True)
+    slug = models.SlugField(max_length=40, editable=False, blank=True)
 
     def __unicode__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.slug = slugify(self.name)
+        super(Project, self).save(*args, **kwargs)
 
     def cartridges_list(self):
         complete_list = self.version
