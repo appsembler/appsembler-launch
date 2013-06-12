@@ -144,10 +144,11 @@ INSTALLED_APPS = (
     'django.contrib.admin',
 
     # Third-party apps
-    'tastypie',
+    'django_extensions',
     'djcelery',
     'kombu.transport.django',
     'south',
+    'tastypie',
 
     # Project apps
     'deployment',

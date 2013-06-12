@@ -4,8 +4,9 @@ amqp==1.0.11
 anyjson==0.3.3
 billiard==2.7.3.28
 celery==3.0.19
-django-tastypie==0.9.15
 django-celery==3.0.17
+django-extensions==1.1.1
+django-tastypie==0.9.15
 kombu==2.5.10
 mimeparse==0.1.3
 pusher==0.7
