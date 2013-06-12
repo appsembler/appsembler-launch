@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+
+{% block extra_js %}
+<script>
+
+</script>
+{% endblock extra_js %}
+
+{% block content %}
+    <div class="form-deploy">
+    {% if object.status = 'Completed' %}
+      <h3>{{ object.project.name }} deploy completed</h3>
+      <div class="alert alert-success" id="info-message-section">
+        <i class="icon-wrench"></i><span id="info-message">Successfully deployed!</span>
+      </div>
+      <p><a class="app-url" href="{{ object.url }}">{{ object.url }}</a></p>
+      <p><strong>{{ remaining }} minutes</strong> remaining to evaluate {{ object.project.name }}</p>
+      <div class="progress progress-striped active remaining-progress">
+        <div class="bar" style="width: {{ percentage }}%;"></div>
+      </div>
+    {% elif object.status = 'Failed' %}
+      <h3>{{ object.project.name }} deploy failed</h3>
+      <div class="alert alert-error" id="info-message-section">
+        <i class="icon-remove"></i><span id="info-message">There's been an error during deployment</span>
+      </div>
+      <p class="error_message">{{ object.project.name }} couldn't be deployed</p> 
+    {% endif %}
+    </div>
+{% endblock content %}

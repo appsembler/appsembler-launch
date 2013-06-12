@@ -1,10 +1,11 @@
+from django.shortcuts import get_object_or_404
 from django.views.generic import View, DetailView, ListView
 from .api import ProjectResource
-from .models import Project
+from .models import Deployment, Project
 
 
 class DeployerView(View):
-    template_name = "main.html"
+    template_name = "deployer.html"
 
     def get_context_data(self, **kwargs):
         data = super(DeployerView, self).get_context_data(**kwargs)
@@ -29,3 +30,17 @@ class DeployerListView(DeployerView, ListView):
 class ProjectDeployerView(DeployerView, DetailView):
     def get_queryset(self):
         return Project.objects.filter(slug=self.kwargs['slug'])
+
+
+class DeploymentDetailView(DetailView):
+    def get_object(self, queryset=None):
+        return get_object_or_404(Deployment, deploy_id=self.kwargs['deploy_id'])
+
+    def get_context_data(self, **kwargs):
+        data = super(DeploymentDetailView, self).get_context_data(**kwargs)
+        obj = self.get_object()
+        if obj.status == 'Completed':
+            remaining = obj.get_remaining_minutes()
+            data['remaining'] = remaining
+            data['percentage'] = (remaining / 60.0) * 100
+        return data

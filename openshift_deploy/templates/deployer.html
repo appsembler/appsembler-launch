@@ -1,27 +1,14 @@
+{% extends "base.html" %}
 {% load static from staticfiles %}
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>OpenShift Deployer</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap -->
-    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet" media="screen">
-    <link href="{% static "css/bootstrap-responsive.css" %}" rel="stylesheet" media="screen">
-    <link href="{% static "css/app.css" %}" rel="stylesheet" media="screen">
-  </head>
-  <body>
-    <div class="container"></div> <!-- /container -->
 
-    <script src="http://code.jquery.com/jquery.js"></script>
+
+{% block extra_js %}
     <script src="http://js.pusher.com/2.0/pusher.min.js"></script>
-    <script src="{% static "js/bootstrap.js" %}"></script>
-    <script src="{% static "js/json2.js" %}"></script>
-    <script src="{% static "js/underscore.js" %}"></script>
-    <script src="{% static "js/backbone.js" %}"></script>
     <script src="{% static "js/app.js" %}"></script>
     <script>
       apps = {{ apps|safe }};
     </script>
+
 
     <!-- Templates -->
     <script type="text/template" id="project_form_template">
@@ -65,6 +52,5 @@
         <i class="icon-wrench"></i><span id="info-message">Starting deployment...</span>
       </div>
     </div>
-    </script>    
-  </body>
-</html>
+    </script>
+{% endblock extra_js %}

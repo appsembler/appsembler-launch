@@ -40,3 +40,7 @@ body {
 .app-url {
   font-size: 12px;
 }
+
+.remaining-progress .bar {
+  background-color: #EE7A70;
+}
