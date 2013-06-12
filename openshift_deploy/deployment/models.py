@@ -75,6 +75,7 @@ class Deployment(models.Model):
                 return 60 - elapsed_minutes
 
         return 0
+    get_remaining_minutes.short_description = 'Minutes remaining'
 
     def deploy(self):
         instance = self._get_pusher_instance()
