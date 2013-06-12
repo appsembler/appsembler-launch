@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
+from django.template.loader import render_to_string
 from oshift import Openshift, OpenShiftException
 from deployment.tasks import deploy
 
@@ -107,8 +108,12 @@ class Deployment(models.Model):
                 'app_url': app_url
             })
             if self.email:
-                send_mail('Deployment successful', 'Application URL: {0}'.format(app_url),
-                          'info@deployer.com', [self.email], fail_silently=True)
+                message = render_to_string('deployment/notification_email.txt', {
+                    'app_url': app_url,
+                    'status_url': reverse('deployment_detail', kwargs={'deploy_id': self.deploy_id})
+                    })
+                send_mail('Deployment successful', message,
+                          'support@appsembler.com', [self.email], fail_silently=True)
         else:
             self.status = 'Failed'
             instance[self.deploy_id].trigger('deployment_failed', {

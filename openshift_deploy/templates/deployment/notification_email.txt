@@ -1,0 +1,3 @@
+Application URL: {{ app_url }}
+
+App status URL: http://launch.appsembler.com{{ status_url }}
