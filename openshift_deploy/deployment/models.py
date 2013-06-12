@@ -1,3 +1,4 @@
+import datetime
 import pusher
 from django.utils import timezone
 from django.conf import settings
@@ -76,6 +77,9 @@ class Deployment(models.Model):
 
         return 0
     get_remaining_minutes.short_description = 'Minutes remaining'
+
+    def expiration_datetime(self):
+        return self.launch_time + datetime.timedelta(minutes=60)
 
     def deploy(self):
         instance = self._get_pusher_instance()

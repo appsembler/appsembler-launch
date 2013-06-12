@@ -1,0 +1,31 @@
+{% extends "deployment/deployer_base.html" %}
+
+{% block deployer_form %}
+{% verbatim %}
+<h3 class="form-deploy-heading">Get your own <%= project.attributes.name %> site in minutes!</h3>
+{% endverbatim %}
+{% endblock deployer_form %}
+
+{% block form_extra_text %}
+<p><small><a data-toggle="modal" href="#" data-target="#embed-buttons">Embed</a> the button on your website!</small></p>
+{% endblock form_extra_text %}
+
+{% block extra_deployer_content %}
+<div id="embed-buttons" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="embed-buttons-label" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="embed-buttons-label">Embed buttons</h3>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+        <div class="span2">
+            <a href="#" class="btn btn-mini">Launch demo site</a>
+        </div>
+        <div class="span2">
+            <a href="#" class="btn btn-small">Launch demo site</a>
+        </div>
+    </div>
+        <textarea name="embed-code" id="embed-code" cols="70" rows="10"></textarea>
+  </div>
+</div>
+{% endblock extra_deployer_content %}

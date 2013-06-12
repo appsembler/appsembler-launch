@@ -6,9 +6,7 @@ body {
 
 .form-deploy {
   text-align: center;
-  max-width: 320px;
-  padding: 19px 29px 19px;
-  margin: 0 auto 20px;
+  padding: 19px 20px 19px;
   background-color: #fff;
   border: 1px solid #e5e5e5;
   -webkit-border-radius: 5px;
@@ -17,6 +15,7 @@ body {
   -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
   -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
   box-shadow: 0 1px 2px rgba(0,0,0,.05);
+  margin-bottom: 5px;
 }
 
 .form-deploy .form-deploy-heading {
@@ -43,4 +42,13 @@ body {
 
 .remaining-progress .bar {
   background-color: #EE7A70;
+}
+
+#central-widget {
+  max-width: 320px;
+  margin: 0 auto 20px;
+}
+
+.modal .btn {
+  margin-bottom: 10px;
 }

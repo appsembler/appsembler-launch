@@ -1,0 +1,12 @@
+{% extends "deployment/deployer_base.html" %}
+
+{% block deployer_form %}
+<h3 class="form-deploy-heading">Pick a project:</h3>
+<select name="project" id="project_select">
+{% verbatim %}
+<% _.each(projects, function(project) { %>
+    <option value="<%= project.resource_uri %>"><%= project.name %></option>
+<% }); %>
+{% endverbatim %}
+</select>
+{% endblock deployer_form %}

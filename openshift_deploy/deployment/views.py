@@ -5,8 +5,6 @@ from .models import Deployment, Project
 
 
 class DeployerView(View):
-    template_name = "deployer.html"
-
     def get_context_data(self, **kwargs):
         data = super(DeployerView, self).get_context_data(**kwargs)
         res = ProjectResource()
@@ -23,11 +21,15 @@ class DeployerView(View):
 
 
 class DeployerListView(DeployerView, ListView):
+    template_name = 'deployment/deployer_list.html'
+
     def get_queryset(self):
         return Project.objects.all()
 
 
 class ProjectDeployerView(DeployerView, DetailView):
+    template_name = 'deployment/deployer_detail.html'
+
     def get_queryset(self):
         return Project.objects.filter(slug=self.kwargs['slug'])
 
@@ -42,5 +44,6 @@ class DeploymentDetailView(DetailView):
         if obj.status == 'Completed':
             remaining = obj.get_remaining_minutes()
             data['remaining'] = remaining
+            data['expiration'] = obj.expiration_datetime()
             data['percentage'] = (remaining / 60.0) * 100
         return data
