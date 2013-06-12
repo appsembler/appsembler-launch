@@ -42,8 +42,8 @@ class DeploymentDetailView(DetailView):
         data = super(DeploymentDetailView, self).get_context_data(**kwargs)
         obj = self.get_object()
         if obj.status == 'Completed':
-            remaining = obj.get_remaining_minutes()
+            remaining = obj.get_remaining_seconds()
             data['remaining'] = remaining
             data['expiration'] = obj.expiration_datetime()
-            data['percentage'] = (remaining / 60.0) * 100
+            data['percentage'] = (remaining / 3600.0) * 100
         return data

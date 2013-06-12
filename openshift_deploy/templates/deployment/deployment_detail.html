@@ -1,14 +1,10 @@
 {% extends "base.html" %}
 {% load static from staticfiles %}
-{% load tz %}
 
 {% block extra_js %}
 <script src="{% static "js/jquery.countdown.min.js" %}"></script>
 <script>
-  {% localtime on %}
-  var expirationDate = new Date({{ expiration.year }}, {{ expiration.month }}-1, {{ expiration.day }}, {{ expiration.hour }}, {{ expiration.minute }}, {{ expiration.second }}).toISOString();
-  {% endlocaltime %}
-  $("#minutes").countdown({until: expirationDate, onTick: updateProgressbar, tickInterval: 10,
+  $("#minutes").countdown({until: '+{{remaining}}s', onTick: updateProgressbar, tickInterval: 10,
    layout: '{mn} {ml} and {sn} {sl}'});
   
   function updateProgressbar(periods) {

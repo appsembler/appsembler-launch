@@ -68,6 +68,14 @@ class Deployment(models.Model):
         if self.status == 'Deploying':
             deploy.delay(self)
 
+    def get_remaining_seconds(self):
+        if self.status == 'Completed' and self.launch_time:
+            diff = timezone.now() - self.launch_time
+            elapsed_seconds = diff.seconds
+            if elapsed_seconds < 3600:
+                return 3600 - elapsed_seconds
+        return 0
+
     def get_remaining_minutes(self):
         if self.status == 'Completed' and self.launch_time:
             diff = timezone.now() - self.launch_time
