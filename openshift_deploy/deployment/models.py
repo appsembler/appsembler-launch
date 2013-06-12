@@ -102,7 +102,7 @@ class Deployment(models.Model):
             app_url = data['data'].get('app_url')
             self.url = app_url
             self.status = 'Completed'
-            self.launch_date = timezone.now()
+            self.launch_time = timezone.now()
             instance[self.deploy_id].trigger('deployment_complete', {
                 'message': "Deployment complete!",
                 'app_url': app_url
