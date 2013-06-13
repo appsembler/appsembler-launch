@@ -8,7 +8,7 @@ class ProjectModelAdmin(admin.ModelAdmin):
 
 class DeploymentModelAdmin(admin.ModelAdmin):
     list_display = ('deploy_id', 'project', 'deployed_app_url', 'email',
-                    'launch_time', 'get_remaining_minutes')
+                    'status', 'launch_time', 'get_remaining_minutes')
     list_filter = ('status', 'project__name')
     ordering = ['-launch_time', 'project']
 
