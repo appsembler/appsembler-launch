@@ -152,8 +152,10 @@ var EmbedView = Backbone.View.extend({
     },
 
     initialize: function() {
+        this.imageTxt = $('#embed-image-code');
         this.markdownTxt = $('#embed-markdown-code');
         this.htmlTxt = $('#embed-html-code');
+        this.restTxt = $('#embed-rest-code');
     },
 
     generateEmbedCode: function(event) {
@@ -165,18 +167,36 @@ var EmbedView = Backbone.View.extend({
         var slug = $btn.data('slug');
         this.markdownTxt.text(this.generateMarkdownCode(size, color, slug));
         this.htmlTxt.text(this.generateHTMLCode(size, color, slug));
+        this.restTxt.text(this.generateRestCode(size, color, slug));
+        this.imageTxt.text(this.generateImgURL(size, color));
         return false;
     },
 
     generateMarkdownCode: function(size, color, slug) {
-        return "[![Launch demo site](http://launch.appsembler.com/static/img/buttons/btn-" + size + "-" + color + ".png)](" +
-            "http://launch.appsembler.com/" + slug + "/)";
+        var imgURL = this.generateImgURL(size, color);
+        var appURL = this.generateAppURL(slug);
+        return "[![Launch demo site]("+ imgURL + ")](" + appURL + ")";
     },
 
     generateHTMLCode: function(size, color, slug) {
-        return '<a href="http://launch.appsembler.com/' + slug + '/"><img src="http://launch.appsembler.com/static/img/buttons/btn-' +
-         size + '-' + color + '.png"></a>';
-    }
+        var imgURL = this.generateImgURL(size, color);
+        var appURL = this.generateAppURL(slug);
+        return '<a href="' + appURL + '"><img src="' + imgURL + '"></a>';
+    },
+
+    generateRestCode: function(size, color, slug) {
+        var imgURL = this.generateImgURL(size, color);
+        var appURL = this.generateAppURL(slug);
+        return '.. image:: ' + imgURL+ '\n:target: ' + appURL;
+    },
+
+    generateImgURL: function(size, color) {
+        return 'http://launch.appsembler.com/static/img/buttons/btn-' + size + '-' + color + '.png';
+    },
+
+    generateAppURL: function(slug) {
+        return 'http://launch.appsembler.com/' + slug + '/';
+    }   
 });
 
 $(function(){
