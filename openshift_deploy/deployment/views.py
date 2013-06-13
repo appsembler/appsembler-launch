@@ -33,6 +33,19 @@ class ProjectDeployerView(DeployerView, DetailView):
     def get_queryset(self):
         return Project.objects.filter(slug=self.kwargs['slug'])
 
+    def get_context_data(self, **kwargs):
+        data = super(ProjectDeployerView, self).get_context_data(**kwargs)
+        data['sizes'] = ('mini', 'small', 'medium', 'large')
+        data['colors'] = (
+            'grey',
+            'blue',
+            'green',
+            'orange',
+            'red',
+            'black'
+        )
+        return data
+
 
 class DeploymentDetailView(DetailView):
     def get_object(self, queryset=None):

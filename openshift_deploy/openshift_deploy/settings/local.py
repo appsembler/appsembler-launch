@@ -8,3 +8,7 @@ EMAIL_HOST_USER = get_env_variable('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = get_env_variable('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+INTERNAL_IPS = (
+    '127.0.0.1',
+)

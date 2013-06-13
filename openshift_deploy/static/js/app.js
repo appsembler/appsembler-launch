@@ -55,6 +55,12 @@ var AppView = Backbone.View.extend({
         }
         var template = _.template($("#project_form_template").html(), data);
         this.$el.html(template);
+        if($('embed-buttons').length > 0) {
+            this.showEmbedButtons = true;
+        }
+        else {
+            this.showEmbedButtons = true;
+        }
         return this;
     },
 
@@ -140,6 +146,42 @@ var AppView = Backbone.View.extend({
     }
 });
 
+var EmbedView = Backbone.View.extend({
+    events: {
+        "click .btn": "generateEmbedCode"
+    },
+
+    initialize: function() {
+        this.markdownTxt = $('#embed-markdown-code');
+        this.htmlTxt = $('#embed-html-code');
+    },
+
+    generateEmbedCode: function(event) {
+        $('.btn').removeClass('active');
+        var $btn = $(event.currentTarget);
+        $btn.addClass('active');
+        var size = $btn.data('size');
+        var color = $btn.data('color');
+        var slug = $btn.data('slug');
+        this.markdownTxt.text(this.generateMarkdownCode(size, color, slug));
+        this.htmlTxt.text(this.generateHTMLCode(size, color, slug));
+        return false;
+    },
+
+    generateMarkdownCode: function(size, color, slug) {
+        return "[![Launch demo site](http://launch.appsembler.com/static/img/buttons/btn-" + size + "-" + color + ".png)](" +
+            "http://launch.appsembler.com/" + slug + "/)";
+    },
+
+    generateHTMLCode: function(size, color, slug) {
+        return '<a href="http://launch.appsembler.com/' + slug + '/"><img src="http://launch.appsembler.com/static/img/buttons/btn-' +
+         size + '-' + color + '.png"></a>';
+    }
+});
+
 $(function(){
     var appview = new AppView();
+    if(appview.showEmbedButtons === true) {
+        var embedview = new EmbedView({el: '#embed-buttons'});
+    }
 });

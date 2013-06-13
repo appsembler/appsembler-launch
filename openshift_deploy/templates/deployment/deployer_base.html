@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 {% load static from staticfiles %}
 
-
 {% block extra_js %}
     <script src="http://js.pusher.com/2.0/pusher.min.js"></script>
     <script src="{% static "js/app.js" %}"></script>
     <script>
       apps = {{ apps|safe }};
     </script>
+{% endblock extra_js %}
 
 
+{% block js_templates %}
     <!-- Templates -->
     <script type="text/template" id="project_form_template">
       <div id="central-widget">
@@ -47,4 +48,4 @@
       </div>
     </div>
     </script>
-{% endblock extra_js %}
+{% endblock js_templates %}
