@@ -1,4 +1,5 @@
 import datetime
+import logging
 import pusher
 from django.utils import timezone
 from django.conf import settings
@@ -9,6 +10,8 @@ from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
 from oshift import Openshift, OpenShiftException
 from deployment.tasks import deploy
+
+logger = logging.getLogger(__name__)
 
 
 class Project(models.Model):
@@ -90,6 +93,7 @@ class Deployment(models.Model):
         return self.launch_time + datetime.timedelta(minutes=60)
 
     def deploy(self):
+        logger.info("User with email {0} started deploying {1}".format(self.email, self.project.name))
         instance = self._get_pusher_instance()
         li = self._get_openshift_instance()
         instance[self.deploy_id].trigger('info_update', {
@@ -107,6 +111,13 @@ class Deployment(models.Model):
         except OpenShiftException, e:
             status = 500
             message = "A critical error has occured."
+            logger.error("Critical error has occured during deployment".format(self.project.name),
+                exc_info=True,
+                extra={
+                    'user_email': self.email,
+                    'project_name': self.project.name,
+                }
+            )
         instance[self.deploy_id].trigger('info_update', {
             'message': "Getting results...",
             'percent': 60
