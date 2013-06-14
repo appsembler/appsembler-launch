@@ -146,6 +146,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'djcelery',
     'kombu.transport.django',
+    'raven.contrib.django.raven_compat',
     'south',
     'tastypie',
 
@@ -180,6 +181,11 @@ LOGGING = {
             'propagate': True,
         },
     }
+}
+
+# Sentry/Raven config
+RAVEN_CONFIG = {
+    'dsn': 'https://a9088372c52540b7a9243f7c4cf45e92:487efa5927d14bbabbbd4b8931530a1a@sentryweb-appsembler.rhcloud.com/2',
 }
 
 # Celery config
