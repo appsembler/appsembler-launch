@@ -93,7 +93,6 @@ class Deployment(models.Model):
         return self.launch_time + datetime.timedelta(minutes=60)
 
     def deploy(self):
-        logger.info("User with email {0} started deploying {1}".format(self.email, self.project.name))
         instance = self._get_pusher_instance()
         li = self._get_openshift_instance()
         instance[self.deploy_id].trigger('info_update', {

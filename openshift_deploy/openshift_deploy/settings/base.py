@@ -198,6 +198,11 @@ LOGGING = {
             'handlers': ['console'],
             'propagate': False,
         },
+        'celery': {
+            'level': 'WARNING',
+            'handlers': ['sentry'],
+            'propagate': False,
+        },
     },
 }
 
@@ -208,6 +213,7 @@ RAVEN_CONFIG = {
 
 # Celery config
 BROKER_URL = 'django://'
+CELERYD_HIJACK_ROOT_LOGGER = False
 
 
 # OpenShift settings
