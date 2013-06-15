@@ -24,7 +24,10 @@ class DeployerListView(DeployerView, ListView):
     template_name = 'deployment/deployer_list.html'
 
     def get_queryset(self):
-        return Project.objects.all()
+        qs = Project.objects.all()
+        if not self.request.user.is_superuser:
+            qs = qs.filter(status='Active')
+        return qs
 
 
 class ProjectDeployerView(DeployerView, DetailView):

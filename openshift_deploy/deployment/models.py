@@ -8,6 +8,8 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
+from model_utils.fields import StatusField
+from model_utils import Choices
 from oshift import Openshift, OpenShiftException
 from deployment.tasks import deploy
 
@@ -15,11 +17,14 @@ logger = logging.getLogger(__name__)
 
 
 class Project(models.Model):
+    STATUS = Choices('Active', 'Inactive')
+
     name = models.CharField(max_length=100)
     github_url = models.CharField(max_length=200)
     version = models.CharField(max_length=300)
     database = models.CharField(max_length=300, blank=True)
     slug = models.SlugField(max_length=40, editable=False, blank=True, null=True)
+    status = StatusField(default=STATUS.Inactive)
 
     class Meta:
         ordering = ['name']
