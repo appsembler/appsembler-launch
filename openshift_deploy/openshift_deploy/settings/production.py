@@ -20,5 +20,9 @@ INSTALLED_APPS += (
     'djrill',
 )
 
+# Email settings
 EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
 MANDRILL_API_KEY = "qweGuAVYZPU4kWSZKg6fIw"
+
+# Celery settings
+BROKER_URL = 'redis://:ZTNiMGM0NDI5OGZjMWMxNDlhZmJmNG@127.5.78.2:16379/0'

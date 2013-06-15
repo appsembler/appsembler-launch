@@ -21,3 +21,6 @@ INSTALLED_APPS += (
 MIDDLEWARE_CLASSES += (
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
+
+# Celery config
+BROKER_URL = 'django://'
