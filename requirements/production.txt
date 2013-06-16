@@ -1,5 +1,6 @@
 -r base.txt
 
 celery-with-redis==3.0
+django-model-utils==1.4.0
 djrill==0.5.0
 redis==2.7.6
