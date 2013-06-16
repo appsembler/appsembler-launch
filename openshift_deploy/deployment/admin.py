@@ -3,7 +3,8 @@ from .models import Deployment, Project
 
 
 class ProjectModelAdmin(admin.ModelAdmin):
-    list_display = ('name', 'github_url', 'slug')
+    list_display = ('name', 'github_url', 'slug', 'status')
+    list_filter = ('status',)
 
 
 class DeploymentModelAdmin(admin.ModelAdmin):
