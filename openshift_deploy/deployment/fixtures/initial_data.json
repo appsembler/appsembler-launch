@@ -3,253 +3,312 @@
   "pk": 1,
   "model": "deployment.project",
   "fields": {
-    "github_url": "https://github.com/openshift/wordpress-example",
-    "slug": "wordpress",
-    "version": "php-5.3",
+    "status": "Active",
     "name": "Wordpress",
-    "database": "mysql-5.1"
+    "database": "mysql-5.1",
+    "github_url": "https://github.com/openshift/wordpress-example",
+    "version": "php-5.3",
+    "slug": "wordpress"
   }
 },
 {
   "pk": 2,
   "model": "deployment.project",
   "fields": {
-    "github_url": "https://github.com/openshift/drupal-quickstart.git",
-    "slug": "drupal",
-    "version": "php-5.3, cron",
+    "status": "Active",
     "name": "Drupal",
-    "database": "mysql-5.1"
+    "database": "mysql-5.1",
+    "github_url": "https://github.com/openshift/drupal-quickstart.git",
+    "version": "php-5.3, cron",
+    "slug": "drupal"
   }
 },
 {
   "pk": 4,
   "model": "deployment.project",
   "fields": {
-    "github_url": "git://github.com/openshift/mediawiki-example.git",
-    "slug": "mediawiki",
-    "version": "php-5.3",
+    "status": "Active",
     "name": "Mediawiki",
-    "database": "mysql-5.1"
+    "database": "mysql-5.1",
+    "github_url": "git://github.com/openshift/mediawiki-example.git",
+    "version": "php-5.3",
+    "slug": "mediawiki"
   }
 },
 {
   "pk": 5,
   "model": "deployment.project",
   "fields": {
-    "github_url": "git://github.com/openshift/dokuwiki-quickstart.git",
-    "slug": "dokuwiki",
-    "version": "php-5.3",
+    "status": "Active",
     "name": "Dokuwiki",
-    "database": ""
+    "database": "",
+    "github_url": "git://github.com/openshift/dokuwiki-quickstart.git",
+    "version": "php-5.3",
+    "slug": "dokuwiki"
   }
 },
 {
   "pk": 6,
   "model": "deployment.project",
   "fields": {
-    "github_url": "git://github.com/openshift/elgg-openshift-quickstart.git",
-    "slug": "elgg",
-    "version": "php-5.3",
+    "status": "Active",
     "name": "Elgg",
-    "database": "mysql-5.1"
+    "database": "mysql-5.1",
+    "github_url": "git://github.com/openshift/elgg-openshift-quickstart.git",
+    "version": "php-5.3",
+    "slug": "elgg"
   }
 },
 {
   "pk": 7,
   "model": "deployment.project",
   "fields": {
-    "github_url": "git://github.com/openshift/CodeIgniterQuickStart.git",
-    "slug": "codeigniter",
-    "version": "php-5.3",
+    "status": "Active",
     "name": "Codeigniter",
-    "database": "mysql-5.1"
+    "database": "mysql-5.1",
+    "github_url": "git://github.com/openshift/CodeIgniterQuickStart.git",
+    "version": "php-5.3",
+    "slug": "codeigniter"
   }
 },
 {
   "pk": 8,
   "model": "deployment.project",
   "fields": {
-    "github_url": "git://github.com/openshift/piwik-openshift-quickstart.git",
-    "slug": "piwik",
-    "version": "php-5.3",
+    "status": "Active",
     "name": "Piwik",
-    "database": "mysql-5.1"
+    "database": "mysql-5.1",
+    "github_url": "git://github.com/openshift/piwik-openshift-quickstart.git",
+    "version": "php-5.3",
+    "slug": "piwik"
   }
 },
 {
   "pk": 9,
   "model": "deployment.project",
   "fields": {
-    "github_url": "git://github.com/openshift/sqlbuddy-openshift-quickstart.git",
-    "slug": "sqlbuddy",
-    "version": "php-5.3",
+    "status": "Active",
     "name": "SQLBuddy",
-    "database": "mysql-5.1"
+    "database": "mysql-5.1",
+    "github_url": "git://github.com/openshift/sqlbuddy-openshift-quickstart.git",
+    "version": "php-5.3",
+    "slug": "sqlbuddy"
   }
 },
 {
   "pk": 10,
   "model": "deployment.project",
   "fields": {
-    "github_url": "git://github.com/openshift/ironmq-openshift-quickstart.git",
-    "slug": "ironmq",
-    "version": "ruby-1.9",
+    "status": "Active",
     "name": "IronMQ",
-    "database": ""
+    "database": "",
+    "github_url": "git://github.com/openshift/ironmq-openshift-quickstart.git",
+    "version": "ruby-1.9",
+    "slug": "ironmq"
   }
 },
 {
   "pk": 12,
   "model": "deployment.project",
   "fields": {
-    "github_url": "git://github.com/openshift/mongolab-openshift-quickstart.git",
-    "slug": "mongolab",
-    "version": "nodejs-0.6",
+    "status": "Active",
     "name": "MongoLab",
-    "database": ""
+    "database": "",
+    "github_url": "git://github.com/openshift/mongolab-openshift-quickstart.git",
+    "version": "nodejs-0.6",
+    "slug": "mongolab"
   }
 },
 {
   "pk": 13,
   "model": "deployment.project",
   "fields": {
-    "github_url": "git://github.com/openshift/OSQA-openshift-quickstart.git",
-    "slug": "osqa",
-    "version": "python-2.6",
+    "status": "Active",
     "name": "OSQA",
-    "database": "mysql-5.1"
+    "database": "mysql-5.1",
+    "github_url": "git://github.com/openshift/OSQA-openshift-quickstart.git",
+    "version": "python-2.6",
+    "slug": "osqa"
   }
 },
 {
   "pk": 16,
   "model": "deployment.project",
   "fields": {
-    "github_url": "git://github.com/openshift/owncloud-openshift-quickstart.git",
-    "slug": "owncloud",
-    "version": "php-5.3",
+    "status": "Active",
     "name": "ownCloud",
-    "database": "mysql-5.1"
+    "database": "mysql-5.1",
+    "github_url": "git://github.com/openshift/owncloud-openshift-quickstart.git",
+    "version": "php-5.3",
+    "slug": "owncloud"
   }
 },
 {
   "pk": 19,
   "model": "deployment.project",
   "fields": {
-    "github_url": "git://github.com/openshift/rails-example.git",
-    "slug": "rails",
-    "version": "ruby-1.9",
+    "status": "Active",
     "name": "Rails",
-    "database": "mysql-5.1"
+    "database": "mysql-5.1",
+    "github_url": "git://github.com/openshift/rails-example.git",
+    "version": "ruby-1.9",
+    "slug": "rails"
   }
 },
 {
   "pk": 20,
   "model": "deployment.project",
   "fields": {
-    "github_url": "git://github.com/openshift/capedwarf-example.git",
-    "slug": "capedwarf",
-    "version": "jbossas-7",
+    "status": "Active",
     "name": "CapeDwarf",
-    "database": ""
+    "database": "",
+    "github_url": "git://github.com/openshift/capedwarf-example.git",
+    "version": "jbossas-7",
+    "slug": "capedwarf"
   }
 },
 {
   "pk": 21,
   "model": "deployment.project",
   "fields": {
-    "github_url": "git://github.com/openshift/bottle-openshift-quickstart.git",
-    "slug": "bottle",
-    "version": "python-2.6",
+    "status": "Active",
     "name": "Bottle",
-    "database": ""
+    "database": "",
+    "github_url": "git://github.com/openshift/bottle-openshift-quickstart.git",
+    "version": "python-2.6",
+    "slug": "bottle"
   }
 },
 {
   "pk": 22,
   "model": "deployment.project",
   "fields": {
-    "github_url": "git://github.com/openshift/redmine-openshift-quickstart.git",
-    "slug": "redmine",
-    "version": "ruby-1.9",
+    "status": "Active",
     "name": "Redmine",
-    "database": "mysql-5.1"
+    "database": "mysql-5.1",
+    "github_url": "git://github.com/openshift/redmine-openshift-quickstart.git",
+    "version": "ruby-1.9",
+    "slug": "redmine"
   }
 },
 {
   "pk": 23,
   "model": "deployment.project",
   "fields": {
-    "github_url": "git://github.com/openshift/magento-example.git",
-    "slug": "magento",
-    "version": "php-5.3",
+    "status": "Active",
     "name": "Magento",
-    "database": "mysql-5.1"
+    "database": "mysql-5.1",
+    "github_url": "git://github.com/openshift/magento-example.git",
+    "version": "php-5.3",
+    "slug": "magento"
   }
 },
 {
   "pk": 24,
   "model": "deployment.project",
   "fields": {
-    "github_url": "https://github.com/openshift/nestacms-example",
-    "slug": "nestacms",
-    "version": "ruby-1.9",
+    "status": "Active",
     "name": "NestaCMS",
-    "database": "mysql-5.1"
+    "database": "mysql-5.1",
+    "github_url": "https://github.com/openshift/nestacms-example",
+    "version": "ruby-1.9",
+    "slug": "nestacms"
   }
 },
 {
   "pk": 26,
   "model": "deployment.project",
   "fields": {
-    "github_url": "https://github.com/openshift/joomla-example",
-    "slug": "joomla",
-    "version": "php-5.3",
+    "status": "Active",
     "name": "Joomla",
-    "database": "mysql-5.1"
+    "database": "mysql-5.1",
+    "github_url": "https://github.com/openshift/joomla-example",
+    "version": "php-5.3",
+    "slug": "joomla"
   }
 },
 {
   "pk": 27,
   "model": "deployment.project",
   "fields": {
-    "github_url": "https://github.com/openshift/reviewboard-example",
-    "slug": "reviewboard",
-    "version": "python-2.7",
+    "status": "Active",
     "name": "Reviewboard",
-    "database": "mysql-5.1"
+    "database": "mysql-5.1",
+    "github_url": "https://github.com/openshift/reviewboard-example",
+    "version": "python-2.7",
+    "slug": "reviewboard"
   }
 },
 {
   "pk": 28,
   "model": "deployment.project",
   "fields": {
-    "github_url": "https://github.com/openshift/sugarcrm-example",
-    "slug": "sugarcrm",
-    "version": "php-5.3",
+    "status": "Active",
     "name": "SugarCRM",
-    "database": "mysql-5.1"
+    "database": "mysql-5.1",
+    "github_url": "https://github.com/openshift/sugarcrm-example",
+    "version": "php-5.3",
+    "slug": "sugarcrm"
   }
 },
 {
   "pk": 29,
   "model": "deployment.project",
   "fields": {
-    "github_url": "https://github.com/kagesenshi/plone-openshift-quickstart",
-    "slug": "plone",
-    "version": "python-2.7",
+    "status": "Active",
     "name": "Plone",
-    "database": ""
+    "database": "",
+    "github_url": "https://github.com/kagesenshi/plone-openshift-quickstart",
+    "version": "python-2.7",
+    "slug": "plone"
   }
 },
 {
   "pk": 30,
   "model": "deployment.project",
   "fields": {
-    "github_url": "https://github.com/stevenolen/ohmage-openshift-quickstart",
-    "slug": "ohmage",
-    "version": "jbossews-2.0",
+    "status": "Active",
     "name": "Ohmage",
-    "database": "mysql-5.1"
+    "database": "mysql-5.1",
+    "github_url": "https://github.com/stevenolen/ohmage-openshift-quickstart",
+    "version": "jbossews-2.0",
+    "slug": "ohmage"
+  }
+},
+{
+  "pk": 31,
+  "model": "deployment.project",
+  "fields": {
+    "status": "Active",
+    "name": "phpBB",
+    "database": "mysql-5.1",
+    "github_url": "https://github.com/openshift/phpbb-example",
+    "version": "php-5.3",
+    "slug": "phpbb"
+  }
+},
+{
+  "pk": 32,
+  "model": "deployment.project",
+  "fields": {
+    "status": "Active",
+    "name": "Pyramid",
+    "database": "",
+    "github_url": "https://github.com/kagesenshi/pyramid-buildout-openshift-quickstart",
+    "version": "python-2.7",
+    "slug": "pyramid"
+  }
+},
+{
+  "pk": 33,
+  "model": "deployment.project",
+  "fields": {
+    "status": "Active",
+    "name": "Anahita",
+    "database": "mysql-5.1",
+    "github_url": "https://github.com/anahitasocial/anahita-openshift",
+    "version": "php-5.3",
+    "slug": "anahita"
   }
 }
 ]
