@@ -208,7 +208,7 @@ LOGGING = {
 
 # Sentry/Raven config
 RAVEN_CONFIG = {
-    'dsn': 'https://a9088372c52540b7a9243f7c4cf45e92:487efa5927d14bbabbbd4b8931530a1a@sentryweb-appsembler.rhcloud.com/2',
+    'dsn': get_env_variable('SENTRY_DSN'),
 }
 
 # Celery config
@@ -224,6 +224,6 @@ OPENSHIFT_DEBUG = True
 OPENSHIFT_VERBOSE = True
 
 # Pusher settings
-PUSHER_APP_ID = '43043'
+PUSHER_APP_ID = get_env_variable('PUSHER_APP_ID')
 PUSHER_APP_KEY = get_env_variable('PUSHER_APP_KEY')
 PUSHER_APP_SECRET = get_env_variable('PUSHER_APP_SECRET')
