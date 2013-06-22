@@ -31,4 +31,6 @@ EMAIL_BACKEND = "djrill.mail.backends.djrill.DjrillBackend"
 MANDRILL_API_KEY = get_env_variable('MANDRILL_API_KEY')
 
 # Celery settings
-BROKER_URL = get_env_variable('BROKER_URL')
+BROKER_URL = "redis://:{0}@{1}:{2}/0".format(get_env_variable('REDIS_PASSWORD'),
+                                             get_env_variable('OPENSHIFT_REDIS_DB_HOST'),
+                                             get_env_variable('OPENSHIFT_REDIS_DB_PORT'))
