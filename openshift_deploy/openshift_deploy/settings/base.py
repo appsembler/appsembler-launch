@@ -146,7 +146,6 @@ INSTALLED_APPS = (
     'django_extensions',
     'djcelery',
     'kombu.transport.django',
-    'raven.contrib.django.raven_compat',
     'south',
     'tastypie',
 
@@ -206,10 +205,6 @@ LOGGING = {
     },
 }
 
-# Sentry/Raven config
-RAVEN_CONFIG = {
-    'dsn': get_env_variable('SENTRY_DSN'),
-}
 
 # Celery config
 BROKER_URL = 'django://'
