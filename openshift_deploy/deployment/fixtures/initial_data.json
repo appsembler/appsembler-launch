@@ -310,5 +310,65 @@
     "version": "php-5.3",
     "slug": "anahita"
   }
+},
+{
+  "pk": 34,
+  "model": "deployment.project",
+  "fields": {
+    "status": "Inactive",
+    "name": "PyramidMySQL",
+    "database": "mysql-5.1",
+    "github_url": "https://github.com/lmacken/pyramid-openshift-quickstart",
+    "version": "python-2.7",
+    "slug": "pyramidmysql"
+  }
+},
+{
+  "pk": 35,
+  "model": "deployment.project",
+  "fields": {
+    "status": "Inactive",
+    "name": "Etherpad",
+    "database": "mongodb-2.2",
+    "github_url": "https://github.com/openshift/etherpad-example",
+    "version": "nodejs-0.6",
+    "slug": "etherpad"
+  }
+},
+{
+  "pk": 36,
+  "model": "deployment.project",
+  "fields": {
+    "status": "Inactive",
+    "name": "Mezzanine",
+    "database": "",
+    "github_url": "https://github.com/natea/mezzanine-openshift",
+    "version": "python-2.6",
+    "slug": "mezzanine"
+  }
+},
+{
+  "pk": 37,
+  "model": "deployment.project",
+  "fields": {
+    "status": "Inactive",
+    "name": "Moodle",
+    "database": "mysql-5.1",
+    "github_url": "https://github.com/burningTyger/openshift_moodle",
+    "version": "php-5.3",
+    "slug": "moodle"
+  }
+},
+{
+  "pk": 38,
+  "model": "deployment.project",
+  "fields": {
+    "status": "Inactive",
+    "name": "Red5",
+    "database": "",
+    "github_url": "https://github.com/dzer6/openshift-red5-quickstart",
+    "version": "diy-0.1",
+    "slug": "red5"
+  }
 }
 ]
