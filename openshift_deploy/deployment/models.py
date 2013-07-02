@@ -81,20 +81,16 @@ class Deployment(models.Model):
             deploy.delay(self)
 
     def get_remaining_seconds(self):
-        if self.status == 'Completed' and self.launch_time:
-            diff = timezone.now() - self.launch_time
-            elapsed_seconds = diff.seconds
-            if elapsed_seconds < 3600:
-                return 3600 - elapsed_seconds
+        if self.expiration_time and self.expiration_time > timezone.now():
+            diff = self.expiration_time - timezone.now()
+            return diff.seconds
         return 0
 
     def get_remaining_minutes(self):
-        if self.status == 'Completed' and self.launch_time:
-            diff = timezone.now() - self.launch_time
-            elapsed_minutes = diff.seconds / 60
-            if elapsed_minutes < 60:
-                return 60 - elapsed_minutes
-
+        if self.expiration_time and self.expiration_time > timezone.now():
+            diff = self.expiration_time - timezone.now()
+            remaining_minutes = diff.seconds / 60
+            return remaining_minutes
         return 0
     get_remaining_minutes.short_description = 'Minutes remaining'
 
