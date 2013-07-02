@@ -1,4 +1,5 @@
 from .base import *
+from datetime import timedelta
 
 DEBUG = True
 
@@ -24,3 +25,14 @@ MIDDLEWARE_CLASSES += (
 
 # Celery config
 BROKER_URL = 'django://'
+
+CELERYBEAT_SCHEDULE = {
+    # 'app-expires-soon-notify': {
+    #     'task': 'deployment.tasks.notify_expiring_apps',
+    #     'schedule': timedelta(seconds=10),
+    # },
+    'destroy-expired-apps': {
+        'task': 'deployment.tasks.destroy_expired_apps',
+        'schedule': timedelta(seconds=10),
+    },
+}

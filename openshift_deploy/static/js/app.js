@@ -79,7 +79,7 @@ var AppView = Backbone.View.extend({
         var app_name = app_data['app_name'];
         var email = this.$('input[name=email]').val();
         // creates a deployment app name from the project name and random characters
-        var deploy_id = app_name + Math.random().toString().substr(2,6);
+        var deploy_id = app_name.toLowerCase() + Math.random().toString().substr(2,6);
         deploy_id = deploy_id.replace(' ', '');
         this.channel = pusher.subscribe(deploy_id);
         this.channel.bind('info_update', this.updateInfoStatus);

@@ -54,12 +54,14 @@ class Deployment(models.Model):
         ('Deploying', 'Deploying'),
         ('Completed', 'Completed'),
         ('Failed', 'Failed'),
+        ('Expired', 'Expired')
     )
     project = models.ForeignKey(Project, related_name='deployments')
     url = models.CharField(max_length=200)
     email = models.EmailField()
     deploy_id = models.CharField(max_length=100)
     launch_time = models.DateTimeField(blank=True, null=True)
+    expiration_time = models.DateTimeField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=50, choices=STATUS_CHOICES,
                               default='Deploying')
@@ -133,6 +135,7 @@ class Deployment(models.Model):
             self.url = app_url
             self.status = 'Completed'
             self.launch_time = timezone.now()
+            self.expiration_time = self.launch_time + datetime.timedelta(minutes=60)
             instance[self.deploy_id].trigger('deployment_complete', {
                 'message': "Deployment complete!",
                 'app_url': app_url,

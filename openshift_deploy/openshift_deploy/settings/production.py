@@ -1,4 +1,5 @@
 from .base import *
+from datetime import timedelta
 
 MEDIA_ROOT = os.path.join(get_env_variable('OPENSHIFT_DATA_DIR'), 'media')
 
@@ -34,3 +35,14 @@ MANDRILL_API_KEY = get_env_variable('MANDRILL_API_KEY')
 BROKER_URL = "redis://:{0}@{1}:{2}/0".format(get_env_variable('REDIS_PASSWORD'),
                                              get_env_variable('OPENSHIFT_REDIS_HOST'),
                                              get_env_variable('OPENSHIFT_REDIS_PORT'))
+
+CELERYBEAT_SCHEDULE = {
+    # 'app-expires-soon-notify': {
+    #     'task': 'deployment.tasks.notify_expiring_apps',
+    #     'schedule': timedelta(seconds=60),
+    # },
+    'destroy-expired-apps': {
+        'task': 'deployment.tasks.destroy_expired_apps',
+        'schedule': timedelta(seconds=60),
+    },
+}
