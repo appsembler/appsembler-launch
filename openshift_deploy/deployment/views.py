@@ -60,6 +60,8 @@ class DeploymentDetailView(DetailView):
         if obj.status == 'Completed':
             remaining = obj.get_remaining_seconds()
             data['remaining'] = remaining
-            data['expiration'] = obj.expiration_datetime()
+            data['expiration'] = obj.expiration_time
             data['percentage'] = (remaining / 3600.0) * 100
+            data['username'] = obj.project.default_username
+            data['password'] = obj.project.default_password
         return data

@@ -22,6 +22,13 @@
       <div class="alert alert-success" id="info-message-section">
         <i class="icon-wrench"></i><span id="info-message">Successfully deployed!</span>
       </div>
+      {% if username or password %}
+      <div class="alert alert-info auth-details">
+        Authentication details<br/>
+        <strong>Username:</strong> {{ username }} <br/>
+        <strong>Password:</strong> {{ password }}
+      </div>
+      {% endif %}
       <p><a class="app-url" href="{{ object.url }}">{{ object.url }}</a></p>
       <p><strong id="minutes">{{ remaining }}</strong> remaining to evaluate {{ object.project.name }}</p>
       {% if remaining > 0 %}
