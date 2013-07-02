@@ -65,23 +65,17 @@ var AppView = Backbone.View.extend({
     },
 
     get_app_data: function() {
-        if (this.project) {
-            return {
-                'project_uri': this.project.get('resource_uri'),
-                'app_name': this.project.get('name')
-            };
-        }
-        else {
-            return {
-                'project_uri': this.$('select[name=project]').val(),
-                'app_name': $("#project_select option:selected").text()
-            };
-        }
+        var project = this.project || this.projects.findWhere({'resource_uri': this.$('select[name=project]').val()});
+        return {
+            'project_uri': project.get('resource_uri'),
+            'app_name': project.get('name'),
+        };
     },
 
     deploy: function(e) {
         e.preventDefault();
         app_data = this.get_app_data();
+        this.selected_app = app_data;
         var project_uri = app_data['project_uri'];
         var app_name = app_data['app_name'];
         var email = this.$('input[name=email]').val();
@@ -120,7 +114,6 @@ var AppView = Backbone.View.extend({
     },
 
     updateInfoStatus: function(data) {
-        console.log(data);
         $("#info-message").text(data.message);
         $(".bar").width(data.percent + "%");
     },
@@ -130,11 +123,17 @@ var AppView = Backbone.View.extend({
         $("img.spinner").hide();
         var $info = $("#info-message-section");
         $info.removeClass('alert-info').addClass('alert-success');
-        console.log(data);
         $info.html('<i class="icon-ok"></i>' + data['message']);
         var app_link = '<a class="app-url" href="' + data['app_url'] + '">' + data['app_url'] + '</a>';
         $(app_link).insertAfter($info);
-    },
+        if(data['username'] || data['password']) {
+            var auth_data = '<div class="alert alert-info auth-details">Authentication details<br/>' +
+                            '<strong>Username:</strong> ' + data['username'] + '<br/>' +
+                            '<strong>Password:</strong> ' + data['password'] +
+                            '</div>'
+            $(auth_data).insertAfter($info);
+        }
+},
 
     deploymentFail: function(data) {
         $("div.progress").hide();

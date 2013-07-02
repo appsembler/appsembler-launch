@@ -32,7 +32,7 @@ body {
   display: block;
 }
 
-#info-message-section {
+#info-message-section, .auth-details {
   text-align: left;
 }
 

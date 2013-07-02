@@ -25,6 +25,8 @@ class Project(models.Model):
     database = models.CharField(max_length=300, blank=True)
     slug = models.SlugField(max_length=40, editable=False, blank=True, null=True)
     status = StatusField(default=STATUS.Inactive)
+    default_username = models.CharField(max_length=30, blank=True)
+    default_password = models.CharField(max_length=30, blank=True)
 
     class Meta:
         ordering = ['name']
@@ -133,7 +135,9 @@ class Deployment(models.Model):
             self.launch_time = timezone.now()
             instance[self.deploy_id].trigger('deployment_complete', {
                 'message': "Deployment complete!",
-                'app_url': app_url
+                'app_url': app_url,
+                'username': self.project.default_username,
+                'password': self.project.default_password
             })
             if self.email:
                 message = render_to_string('deployment/notification_email.txt', {
