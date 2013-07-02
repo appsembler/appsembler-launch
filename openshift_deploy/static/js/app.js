@@ -75,7 +75,6 @@ var AppView = Backbone.View.extend({
     deploy: function(e) {
         e.preventDefault();
         app_data = this.get_app_data();
-        this.selected_app = app_data;
         var project_uri = app_data['project_uri'];
         var app_name = app_data['app_name'];
         var email = this.$('input[name=email]').val();
