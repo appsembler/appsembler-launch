@@ -14,8 +14,8 @@ def deploy(deploy_instance):
 def destroy_expired_apps():
 	# protection against circular imports
 	from .models import Deployment
-	expired = Deployment.objects.filter(expiration_time__lt=datetime.now()).exclude(
-		status='Expired')
+	expired = Deployment.objects.filter(expiration_time__lt=datetime.now(),
+	 									status='Completed')
 	if expired:
 		oshift = expired[0]._get_openshift_instance()
 		for app in expired:
