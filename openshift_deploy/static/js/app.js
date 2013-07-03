@@ -82,6 +82,16 @@ var AppView = Backbone.View.extend({
         // creates a deployment app name from the project name and random characters
         var deploy_id = app_name.toLowerCase() + Math.random().toString().substr(2,6);
         deploy_id = deploy_id.replace(' ', '');
+
+        // tracks the user interaction
+        analytics.identify(email, {
+            email: email
+        });
+        analytics.track('Deployed an app', {
+            app_name: app_name,
+            deploy_id: deploy_id
+        });
+
         this.channel = pusher.subscribe(deploy_id);
         this.channel.bind('info_update', this.updateInfoStatus);
         this.channel.bind('deployment_complete', this.deploymentSuccess);
