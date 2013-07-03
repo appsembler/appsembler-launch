@@ -66,6 +66,7 @@ class Deployment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=50, choices=STATUS_CHOICES,
                               default='Deploying')
+    reminder_mail_sent = models.BooleanField()
 
     def __unicode__(self):
         return self.deploy_id
@@ -155,6 +156,17 @@ class Deployment(models.Model):
                 'details': message if message else data['messages'][0]['text']
             })
         self.save()
+
+    def send_reminder_email(self):
+        if self.email:
+            message = render_to_string('deployment/reminder_email.txt', {
+                'app_url': self.url,
+                'status_url': reverse('deployment_detail', kwargs={'deploy_id': self.deploy_id}),
+                'remaining_minutes': self.get_remaining_minutes(),
+                'expiration_time': self.expiration_time
+                })
+            send_mail('Your app is about to expire soon!', message,
+                      'support@appsembler.com', [self.email], fail_silently=True)
 
     def _get_openshift_instance(self):
         openshift = Openshift(

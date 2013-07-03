@@ -39,12 +39,60 @@ MIDDLEWARE_CLASSES += (
 BROKER_URL = 'django://'
 
 CELERYBEAT_SCHEDULE = {
-    # 'app-expires-soon-notify': {
-    #     'task': 'deployment.tasks.notify_expiring_apps',
-    #     'schedule': timedelta(seconds=10),
-    # },
+    'app-expires-soon-notify': {
+        'task': 'deployment.tasks.app_expiring_soon_reminder',
+        'schedule': timedelta(seconds=30),
+    },
     'destroy-expired-apps': {
         'task': 'deployment.tasks.destroy_expired_apps',
-        'schedule': timedelta(seconds=1000),
+        'schedule': timedelta(seconds=30),
+    },
+}
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'root': {
+        'level': 'DEBUG',
+        'handlers': ['console'],
+    },
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+    },
+    'handlers': {
+        'sentry': {
+            'level': 'ERROR',
+            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'WARNING',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        'raven': {
+            'level': 'WARNING',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        'sentry.errors': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+            'propagate': False,
+        },
+        'celery': {
+            'level': 'DEBUG',
+            'handlers': ['sentry'],
+            'propagate': False,
+        },
     },
 }
