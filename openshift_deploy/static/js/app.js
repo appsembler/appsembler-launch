@@ -69,6 +69,7 @@ var AppView = Backbone.View.extend({
         return {
             'project_uri': project.get('resource_uri'),
             'app_name': project.get('name'),
+            'survey_url': project.get('survey_form_url')
         };
     },
 
@@ -92,7 +93,7 @@ var AppView = Backbone.View.extend({
             deploy_id: deploy_id
         });
         if(deploy.isValid()) {
-            this.showInfoWindow(app_name);
+            this.showInfoWindow(app_data);
             deploy.save({}, {
                 error: this.deploymentFail
             });
@@ -105,9 +106,10 @@ var AppView = Backbone.View.extend({
         }
     },
 
-    showInfoWindow: function(app_name) {
+    showInfoWindow: function(app_data) {
         var template = _.template($("#deploy_status_template").html(), {
-            app_name: app_name
+            app_name: app_data['app_name'],
+            survey_url: app_data['survey_url']
         });
         this.$el.html(template);
     },
