@@ -37,10 +37,10 @@ BROKER_URL = "redis://:{0}@{1}:{2}/0".format(get_env_variable('REDIS_PASSWORD'),
                                              get_env_variable('OPENSHIFT_REDIS_PORT'))
 
 CELERYBEAT_SCHEDULE = {
-    # 'app-expires-soon-notify': {
-    #     'task': 'deployment.tasks.notify_expiring_apps',
-    #     'schedule': timedelta(seconds=60),
-    # },
+    'app-expires-soon-notify': {
+        'task': 'deployment.tasks.app_expiring_soon_reminder',
+        'schedule': timedelta(seconds=60),
+    },
     'destroy-expired-apps': {
         'task': 'deployment.tasks.destroy_expired_apps',
         'schedule': timedelta(seconds=60),
