@@ -1,6 +1,9 @@
 from .base import *
 from datetime import timedelta
 
+DEBUG = False
+TEMPLATE_DEBUG = DEBUG
+
 MEDIA_ROOT = os.path.join(get_env_variable('OPENSHIFT_DATA_DIR'), 'media')
 
 STATIC_ROOT = os.path.join(get_env_variable('OPENSHIFT_REPO_DIR'), 'wsgi', 'static')
