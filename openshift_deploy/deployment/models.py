@@ -27,6 +27,7 @@ class Project(models.Model):
     status = StatusField(default=STATUS.Inactive)
     default_username = models.CharField(max_length=30, blank=True)
     default_password = models.CharField(max_length=30, blank=True)
+    survey_form_url = models.URLField(blank=True)
 
     class Meta:
         ordering = ['name']

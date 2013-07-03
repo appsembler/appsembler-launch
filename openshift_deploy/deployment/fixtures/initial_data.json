@@ -8,6 +8,8 @@
     "database": "mysql-5.1",
     "github_url": "https://github.com/openshift/wordpress-example",
     "version": "php-5.3",
+    "default_username": "",
+    "default_password": "",
     "slug": "wordpress"
   }
 },
@@ -20,6 +22,8 @@
     "database": "mysql-5.1",
     "github_url": "https://github.com/openshift/drupal-quickstart.git",
     "version": "php-5.3, cron",
+    "default_username": "admin",
+    "default_password": "openshift_changeme",
     "slug": "drupal"
   }
 },
@@ -32,6 +36,8 @@
     "database": "mysql-5.1",
     "github_url": "git://github.com/openshift/mediawiki-example.git",
     "version": "php-5.3",
+    "default_username": "admin",
+    "default_password": "OpenShiftAdmin",
     "slug": "mediawiki"
   }
 },
@@ -44,6 +50,8 @@
     "database": "",
     "github_url": "git://github.com/openshift/dokuwiki-quickstart.git",
     "version": "php-5.3",
+    "default_username": "admin",
+    "default_password": "OpenShiftAdmin",
     "slug": "dokuwiki"
   }
 },
@@ -56,6 +64,8 @@
     "database": "mysql-5.1",
     "github_url": "git://github.com/openshift/elgg-openshift-quickstart.git",
     "version": "php-5.3",
+    "default_username": "",
+    "default_password": "",
     "slug": "elgg"
   }
 },
@@ -68,6 +78,8 @@
     "database": "mysql-5.1",
     "github_url": "git://github.com/openshift/CodeIgniterQuickStart.git",
     "version": "php-5.3",
+    "default_username": "",
+    "default_password": "",
     "slug": "codeigniter"
   }
 },
@@ -80,6 +92,8 @@
     "database": "mysql-5.1",
     "github_url": "git://github.com/openshift/piwik-openshift-quickstart.git",
     "version": "php-5.3",
+    "default_username": "",
+    "default_password": "",
     "slug": "piwik"
   }
 },
@@ -92,6 +106,8 @@
     "database": "mysql-5.1",
     "github_url": "git://github.com/openshift/sqlbuddy-openshift-quickstart.git",
     "version": "php-5.3",
+    "default_username": "",
+    "default_password": "",
     "slug": "sqlbuddy"
   }
 },
@@ -104,6 +120,8 @@
     "database": "",
     "github_url": "git://github.com/openshift/ironmq-openshift-quickstart.git",
     "version": "ruby-1.9",
+    "default_username": "",
+    "default_password": "",
     "slug": "ironmq"
   }
 },
@@ -114,8 +132,10 @@
     "status": "Active",
     "name": "MongoLab",
     "database": "",
-    "github_url": "git://github.com/openshift/mongolab-openshift-quickstart.git",
+    "github_url": "https://github.com/mongolab/mongolab-openshift-quickstart",
     "version": "nodejs-0.6",
+    "default_username": "",
+    "default_password": "",
     "slug": "mongolab"
   }
 },
@@ -128,6 +148,8 @@
     "database": "mysql-5.1",
     "github_url": "git://github.com/openshift/OSQA-openshift-quickstart.git",
     "version": "python-2.6",
+    "default_username": "",
+    "default_password": "",
     "slug": "osqa"
   }
 },
@@ -140,6 +162,8 @@
     "database": "mysql-5.1",
     "github_url": "git://github.com/openshift/owncloud-openshift-quickstart.git",
     "version": "php-5.3",
+    "default_username": "admin",
+    "default_password": "OpenShiftAdmin",
     "slug": "owncloud"
   }
 },
@@ -152,6 +176,8 @@
     "database": "mysql-5.1",
     "github_url": "git://github.com/openshift/rails-example.git",
     "version": "ruby-1.9",
+    "default_username": "",
+    "default_password": "",
     "slug": "rails"
   }
 },
@@ -164,6 +190,8 @@
     "database": "",
     "github_url": "git://github.com/openshift/capedwarf-example.git",
     "version": "jbossas-7",
+    "default_username": "",
+    "default_password": "",
     "slug": "capedwarf"
   }
 },
@@ -176,6 +204,8 @@
     "database": "",
     "github_url": "git://github.com/openshift/bottle-openshift-quickstart.git",
     "version": "python-2.6",
+    "default_username": "",
+    "default_password": "",
     "slug": "bottle"
   }
 },
@@ -186,8 +216,10 @@
     "status": "Active",
     "name": "Redmine",
     "database": "mysql-5.1",
-    "github_url": "git://github.com/openshift/redmine-openshift-quickstart.git",
+    "github_url": "https://github.com/openshift/redmine-2.0-openshift-quickstart",
     "version": "ruby-1.9",
+    "default_username": "admin",
+    "default_password": "admin",
     "slug": "redmine"
   }
 },
@@ -200,6 +232,8 @@
     "database": "mysql-5.1",
     "github_url": "git://github.com/openshift/magento-example.git",
     "version": "php-5.3",
+    "default_username": "admin",
+    "default_password": "OpenShiftAdmin123",
     "slug": "magento"
   }
 },
@@ -212,6 +246,8 @@
     "database": "mysql-5.1",
     "github_url": "https://github.com/openshift/nestacms-example",
     "version": "ruby-1.9",
+    "default_username": "",
+    "default_password": "",
     "slug": "nestacms"
   }
 },
@@ -224,6 +260,8 @@
     "database": "mysql-5.1",
     "github_url": "https://github.com/openshift/joomla-example",
     "version": "php-5.3",
+    "default_username": "admin",
+    "default_password": "4dm1n",
     "slug": "joomla"
   }
 },
@@ -236,6 +274,8 @@
     "database": "mysql-5.1",
     "github_url": "https://github.com/openshift/reviewboard-example",
     "version": "python-2.7",
+    "default_username": "Admin",
+    "default_password": "OpenShiftAdmin",
     "slug": "reviewboard"
   }
 },
@@ -248,6 +288,8 @@
     "database": "mysql-5.1",
     "github_url": "https://github.com/openshift/sugarcrm-example",
     "version": "php-5.3",
+    "default_username": "admin",
+    "default_password": "admin",
     "slug": "sugarcrm"
   }
 },
@@ -260,6 +302,8 @@
     "database": "",
     "github_url": "https://github.com/kagesenshi/plone-openshift-quickstart",
     "version": "python-2.7",
+    "default_username": "admin",
+    "default_password": "OpenShiftAdmin",
     "slug": "plone"
   }
 },
@@ -272,6 +316,8 @@
     "database": "mysql-5.1",
     "github_url": "https://github.com/stevenolen/ohmage-openshift-quickstart",
     "version": "jbossews-2.0",
+    "default_username": "ohmage.admin",
+    "default_password": "ohmage.passwd",
     "slug": "ohmage"
   }
 },
@@ -284,6 +330,8 @@
     "database": "mysql-5.1",
     "github_url": "https://github.com/openshift/phpbb-example",
     "version": "php-5.3",
+    "default_username": "Admin",
+    "default_password": "OpenShiftAdmin",
     "slug": "phpbb"
   }
 },
@@ -296,6 +344,8 @@
     "database": "",
     "github_url": "https://github.com/kagesenshi/pyramid-buildout-openshift-quickstart",
     "version": "python-2.7",
+    "default_username": "",
+    "default_password": "",
     "slug": "pyramid"
   }
 },
@@ -308,6 +358,8 @@
     "database": "mysql-5.1",
     "github_url": "https://github.com/anahitasocial/anahita-openshift",
     "version": "php-5.3",
+    "default_username": "admin",
+    "default_password": "j87op$oi89",
     "slug": "anahita"
   }
 },
@@ -320,6 +372,8 @@
     "database": "mysql-5.1",
     "github_url": "https://github.com/lmacken/pyramid-openshift-quickstart",
     "version": "python-2.7",
+    "default_username": "",
+    "default_password": "",
     "slug": "pyramidmysql"
   }
 },
@@ -332,6 +386,8 @@
     "database": "mongodb-2.2",
     "github_url": "https://github.com/openshift/etherpad-example",
     "version": "nodejs-0.6",
+    "default_username": "",
+    "default_password": "",
     "slug": "etherpad"
   }
 },
@@ -344,6 +400,8 @@
     "database": "",
     "github_url": "https://github.com/natea/mezzanine-openshift",
     "version": "python-2.6",
+    "default_username": "admin",
+    "default_password": "default",
     "slug": "mezzanine"
   }
 },
@@ -356,6 +414,8 @@
     "database": "mysql-5.1",
     "github_url": "https://github.com/burningTyger/openshift_moodle",
     "version": "php-5.3",
+    "default_username": "",
+    "default_password": "",
     "slug": "moodle"
   }
 },
@@ -368,7 +428,23 @@
     "database": "",
     "github_url": "https://github.com/dzer6/openshift-red5-quickstart",
     "version": "diy-0.1",
+    "default_username": "",
+    "default_password": "",
     "slug": "red5"
+  }
+},
+{
+  "pk": 39,
+  "model": "deployment.project",
+  "fields": {
+    "status": "Inactive",
+    "name": "Trac",
+    "database": "",
+    "github_url": "https://github.com/brianwcook/openshift-diy-trac",
+    "version": "diy-0.1",
+    "default_username": "",
+    "default_password": "",
+    "slug": "trac"
   }
 }
 ]
