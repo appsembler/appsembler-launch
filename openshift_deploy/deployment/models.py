@@ -142,7 +142,9 @@ class Deployment(models.Model):
             if self.email:
                 message = render_to_string('deployment/notification_email.txt', {
                     'app_url': app_url,
-                    'status_url': reverse('deployment_detail', kwargs={'deploy_id': self.deploy_id})
+                    'status_url': reverse('deployment_detail', kwargs={'deploy_id': self.deploy_id}),
+                    'username': self.project.default_username,
+                    'password': self.project.default_password
                     })
                 send_mail('Deployment successful', message,
                           'support@appsembler.com', [self.email], fail_silently=True)
