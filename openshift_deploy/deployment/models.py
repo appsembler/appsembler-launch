@@ -144,7 +144,7 @@ class Deployment(models.Model):
             if self.email:
                 cio = CustomerIO(settings.CUSTOMERIO_SITE_ID, settings.CUSTOMERIO_API_KEY)
                 cio.track(customer_id=self.email,
-                          name='app_deploy_complete'
+                          name='app_deploy_complete',
                           app_url=app_url,
                           status_url="http://launch.appsembler.com/" + reverse('deployment_detail', kwargs={'deploy_id': self.deploy_id}),
                           username=self.project.default_username,
