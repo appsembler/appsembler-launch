@@ -222,3 +222,7 @@ OPENSHIFT_VERBOSE = True
 PUSHER_APP_ID = get_env_variable('PUSHER_APP_ID')
 PUSHER_APP_KEY = get_env_variable('PUSHER_APP_KEY')
 PUSHER_APP_SECRET = get_env_variable('PUSHER_APP_SECRET')
+
+# Customer.io settings
+CUSTOMERIO_SITE_ID = get_env_variable('CUSTOMERIO_SITE_ID')
+CUSTOMERIO_API_KEY = get_env_variable('CUSTOMERIO_API_KEY')

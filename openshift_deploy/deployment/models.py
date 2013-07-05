@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
+from customerio import CustomerIO
 from model_utils.fields import StatusField
 from model_utils import Choices
 from oshift import Openshift, OpenShiftException
@@ -141,14 +142,14 @@ class Deployment(models.Model):
                 'password': self.project.default_password
             })
             if self.email:
-                message = render_to_string('deployment/notification_email.txt', {
-                    'app_url': app_url,
-                    'status_url': reverse('deployment_detail', kwargs={'deploy_id': self.deploy_id}),
-                    'username': self.project.default_username,
-                    'password': self.project.default_password
-                    })
-                send_mail('Deployment successful', message,
-                          'support@appsembler.com', [self.email], fail_silently=True)
+                cio = CustomerIO(settings.CUSTOMERIO_SITE_ID, settings.CUSTOMERIO_API_KEY)
+                cio.track(customer_id=self.email,
+                          name='app_deploy_complete'
+                          app_url=app_url,
+                          status_url="http://launch.appsembler.com/" + reverse('deployment_detail', kwargs={'deploy_id': self.deploy_id}),
+                          username=self.project.default_username,
+                          password=self.project.default_password
+                )
         else:
             self.status = 'Failed'
             instance[self.deploy_id].trigger('deployment_failed', {
@@ -159,14 +160,15 @@ class Deployment(models.Model):
 
     def send_reminder_email(self):
         if self.email:
-            message = render_to_string('deployment/reminder_email.txt', {
-                'app_url': self.url,
-                'status_url': reverse('deployment_detail', kwargs={'deploy_id': self.deploy_id}),
-                'remaining_minutes': self.get_remaining_minutes(),
-                'expiration_time': self.expiration_time
-                })
-            send_mail('Your app is about to expire soon!', message,
-                      'support@appsembler.com', [self.email], fail_silently=True)
+            cio = CustomerIO(settings.CUSTOMERIO_SITE_ID, settings.CUSTOMERIO_API_KEY)
+            cio.track(
+                customer_id=self.email,
+                name='app_expiring_soon',
+                app_url=self.url,
+                status_url= "http://launch.appsembler.com/" + reverse('deployment_detail', kwargs={'deploy_id': self.deploy_id}),
+                remaining_minutes=self.get_remaining_minutes(),
+                expiration_time=self.expiration_time
+            )
 
     def _get_openshift_instance(self):
         openshift = Openshift(
