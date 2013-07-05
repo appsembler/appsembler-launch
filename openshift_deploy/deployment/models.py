@@ -1,13 +1,13 @@
 import datetime
 import logging
 import pusher
-from django.utils import timezone
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
+from django.utils import timezone
 from customerio import CustomerIO
 from model_utils.fields import StatusField
 from model_utils import Choices
@@ -167,7 +167,7 @@ class Deployment(models.Model):
                 app_url=self.url,
                 status_url= "http://launch.appsembler.com/" + reverse('deployment_detail', kwargs={'deploy_id': self.deploy_id}),
                 remaining_minutes=self.get_remaining_minutes(),
-                expiration_time=self.expiration_time
+                expiration_time=timezone.localtime(self.expiration_time)
             )
 
     def _get_openshift_instance(self):
