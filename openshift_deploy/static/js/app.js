@@ -44,6 +44,10 @@ var AppView = Backbone.View.extend({
     },
 
     render: function() {
+        // detects if the app is running inside an iframe
+        if ( window.self !== window.top ) {
+            this.$el.addClass('iframe');
+        }
         data = {};
         if (this.projects.length > 1) {
             data['projects'] = this.projects.toJSON();

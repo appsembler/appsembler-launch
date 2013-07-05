@@ -50,6 +50,11 @@ class ProjectDeployerView(DeployerView, DetailView):
         return data
 
 
+class ProjectDeployerEmbedView(ProjectDeployerView):
+    def get_queryset(self):
+        return Project.objects.filter(pk=self.kwargs['pk'])
+
+
 class DeploymentDetailView(DetailView):
     def get_object(self, queryset=None):
         return get_object_or_404(Deployment, deploy_id=self.kwargs['deploy_id'])
