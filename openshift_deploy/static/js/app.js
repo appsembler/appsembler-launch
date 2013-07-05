@@ -89,7 +89,8 @@ var AppView = Backbone.View.extend({
         });
         analytics.track('Deployed an app', {
             app_name: app_name,
-            deploy_id: deploy_id
+            deploy_id: deploy_id,
+            email: email,
         });
 
         this.channel = pusher.subscribe(deploy_id);
