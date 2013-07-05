@@ -4,16 +4,12 @@ from datetime import timedelta
 DEBUG = True
 
 # Email settings
-EMAIL_HOST = 'mail.kset.org'
-EMAIL_HOST_USER = get_env_variable('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = get_env_variable('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'appsemblerlaunch',  # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'appsemblerlaunch.db',  # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -41,11 +37,11 @@ BROKER_URL = 'django://'
 CELERYBEAT_SCHEDULE = {
     'app-expires-soon-notify': {
         'task': 'deployment.tasks.app_expiring_soon_reminder',
-        'schedule': timedelta(seconds=30),
+        'schedule': timedelta(seconds=60),
     },
     'destroy-expired-apps': {
         'task': 'deployment.tasks.destroy_expired_apps',
-        'schedule': timedelta(seconds=30),
+        'schedule': timedelta(seconds=60),
     },
 }
 
@@ -54,7 +50,7 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': True,
     'root': {
-        'level': 'DEBUG',
+        'level': 'WARNING',
         'handlers': ['console'],
     },
     'formatters': {
@@ -63,10 +59,6 @@ LOGGING = {
         },
     },
     'handlers': {
-        'sentry': {
-            'level': 'ERROR',
-            'class': 'raven.contrib.django.raven_compat.handlers.SentryHandler',
-        },
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
@@ -84,14 +76,9 @@ LOGGING = {
             'handlers': ['console'],
             'propagate': False,
         },
-        'sentry.errors': {
-            'level': 'DEBUG',
-            'handlers': ['console'],
-            'propagate': False,
-        },
         'celery': {
-            'level': 'DEBUG',
-            'handlers': ['sentry'],
+            'level': 'WARNING',
+            'handlers': ['console'],
             'propagate': False,
         },
     },
