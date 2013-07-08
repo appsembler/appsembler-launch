@@ -153,7 +153,7 @@ class Deployment(models.Model):
                 )
         else:
             self.status = 'Failed'
-            error_log = DeploymentErrorLog(deployment=self, status=status, error_log=data['messages'][0]['text'])
+            error_log = DeploymentErrorLog(deployment=self, http_status=status, error_log=data['messages'][0]['text'])
             error.save()
             instance[self.deploy_id].trigger('deployment_failed', {
                 'message': "Deployment failed!",
