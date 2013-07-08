@@ -116,7 +116,12 @@ class Deployment(models.Model):
                 init_git_url=self.project.github_url
             )
             data = res()
-        except (OpenShiftException, SSLError):
+        except (OpenShiftException, SSLError, ValueError) as e:
+            # workaround to be able to log errors when the deployment fails
+            if e.__class__ == OpenShiftException:
+                log_error = True
+            else:
+                log_error = False
             status = 500
             message = "A critical error has occured."
             logger.error("Critical error has occured during deployment".format(self.project.name),
@@ -153,8 +158,9 @@ class Deployment(models.Model):
                 )
         else:
             self.status = 'Failed'
-            error_log = DeploymentErrorLog(deployment=self, http_status=status, error_log=data['messages'][0]['text'])
-            error_log.save()
+            if log_error:
+                error_log = DeploymentErrorLog(deployment=self, http_status=status, error_log=data['messages'][0]['text'])
+                error_log.save()
             instance[self.deploy_id].trigger('deployment_failed', {
                 'message': "Deployment failed!",
             })
