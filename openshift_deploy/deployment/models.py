@@ -109,6 +109,7 @@ class Deployment(models.Model):
             'percent': 30
         })
         message = None
+        log_error = False
         try:
             status, res = li.app_create(
                 app_name=self.deploy_id,
@@ -120,8 +121,6 @@ class Deployment(models.Model):
             # workaround to be able to log errors when the deployment fails
             if e.__class__ == OpenShiftException:
                 log_error = True
-            else:
-                log_error = False
             status = 500
             message = "A critical error has occured."
             logger.error("Critical error has occured during deployment".format(self.project.name),
