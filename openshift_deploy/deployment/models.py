@@ -12,6 +12,7 @@ from customerio import CustomerIO
 from model_utils.fields import StatusField
 from model_utils import Choices
 from oshift import Openshift, OpenShiftException
+from requests.exceptions import SSLError
 from deployment.tasks import deploy
 
 logger = logging.getLogger(__name__)
@@ -115,7 +116,7 @@ class Deployment(models.Model):
                 init_git_url=self.project.github_url
             )
             data = res()
-        except OpenShiftException, e:
+        except (OpenShiftException, SSLError):
             status = 500
             message = "A critical error has occured."
             logger.error("Critical error has occured during deployment".format(self.project.name),
@@ -152,6 +153,8 @@ class Deployment(models.Model):
                 )
         else:
             self.status = 'Failed'
+            error_log = DeploymentErrorLog(deployment=self, status=status, error_log=data['messages'][0]['text'])
+            error.save()
             instance[self.deploy_id].trigger('deployment_failed', {
                 'message': "Deployment failed!",
             })
@@ -186,3 +189,9 @@ class Deployment(models.Model):
             secret=settings.PUSHER_APP_SECRET
         )
         return push
+
+
+class DeploymentErrorLog(models.Model):
+    deployment = models.OneToOneField(Deployment, related_name='error_log')
+    http_status = models.CharField(max_length=3)
+    error_log = models.TextField()
