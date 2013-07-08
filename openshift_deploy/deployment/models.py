@@ -195,3 +195,4 @@ class DeploymentErrorLog(models.Model):
     deployment = models.OneToOneField(Deployment, related_name='error_log')
     http_status = models.CharField(max_length=3)
     error_log = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Deployment, Project
+from .models import Deployment, DeploymentErrorLog, Project
 
 
 class ProjectModelAdmin(admin.ModelAdmin):
@@ -18,5 +18,11 @@ class DeploymentModelAdmin(admin.ModelAdmin):
     deployed_app_url.short_description = "App URL"
     deployed_app_url.allow_tags = True
 
+
+class DeploymentErrorLogModelAdmin(admin.ModelAdmin):
+    list_display = ('deployment', 'http_status', 'created')
+
+
 admin.site.register(Deployment, DeploymentModelAdmin)
 admin.site.register(Project, ProjectModelAdmin)
+admin.site.register(DeploymentErrorLog, DeploymentErrorLogModelAdmin)
