@@ -154,7 +154,6 @@ class Deployment(models.Model):
             self.status = 'Failed'
             instance[self.deploy_id].trigger('deployment_failed', {
                 'message': "Deployment failed!",
-                'details': message if message else data['messages'][0]['text']
             })
         self.save()
 

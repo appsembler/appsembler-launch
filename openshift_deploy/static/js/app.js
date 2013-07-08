@@ -157,7 +157,6 @@ var AppView = Backbone.View.extend({
         var $info = $("#info-message-section");
         $info.removeClass('alert-info').addClass('alert-error');
         $info.html('<i class="icon-remove"></i>' + data['message']);
-        $('<p class="error_message">' + data['details'] + '</p>').insertAfter($info);
     }
 });
 
