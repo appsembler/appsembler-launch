@@ -28,6 +28,7 @@ INSTALLED_APPS += (
 # Sentry/Raven config
 RAVEN_CONFIG = {
     'dsn': get_env_variable('SENTRY_DSN'),
+    'timeout': 3,
 }
 
 # Email settings
