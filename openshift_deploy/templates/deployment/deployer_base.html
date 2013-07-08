@@ -45,9 +45,11 @@
         <div class="alert alert-info" id="info-message-section">
           <i class="icon-wrench"></i><span id="info-message">Starting deployment...</span>
         </div>
+        <p class="survey">
         <% if (survey_url !== '') { %>
-          <p><a href="<%= survey_url %>" onclick="window.open(this.href,  null, 'height=1204, width=680, toolbar=0, location=0, status=1, scrollbars=1, resizable=1'); return false">Fill out</a> the survey while you're waiting!</p>
+          <a href="<%= survey_url %>" onclick="window.open(this.href,  null, 'height=1204, width=680, toolbar=0, location=0, status=1, scrollbars=1, resizable=1'); return false">Fill out</a> the survey while you're waiting!
         <% } %>
+        </p>
       </div>
     </div>
     </script>

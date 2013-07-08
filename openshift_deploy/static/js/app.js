@@ -137,7 +137,9 @@ var AppView = Backbone.View.extend({
     deploymentSuccess: function(data) {
         $("div.progress").hide();
         $("img.spinner").hide();
+        $(".survey").hide();
         var $info = $("#info-message-section");
+        $(".form-deploy h3").text("Deployed " + data['app_name']);
         $info.removeClass('alert-info').addClass('alert-success');
         $info.html('<i class="icon-ok"></i>' + data['message']);
         var app_link = '<a class="app-url" href="' + data['app_url'] + '">' + data['app_url'] + '</a>';
