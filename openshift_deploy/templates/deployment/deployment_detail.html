@@ -17,7 +17,7 @@
 {% block content %}
 <div id="central-widget">
     <div class="form-deploy">
-    {% if object.status = 'Completed' %}
+    {% if object.status = 'Completed' or object.status = 'Expired' %}
       <h3>{{ object.project.name }} deploy completed</h3>
       <div class="alert alert-success" id="info-message-section">
         <i class="icon-wrench"></i><span id="info-message">Successfully deployed!</span>
