@@ -25,6 +25,9 @@ var Deployment = Backbone.Model.extend({
         if(attrs.email === "" || !re.test(attrs.email)) {
             return "You must enter an email address!";
         }
+        if(attrs.email.length > 60) {
+            return "You've entered an email address that is too long (>60 characters)";
+        }
     }
 });
 
@@ -94,7 +97,7 @@ var AppView = Backbone.View.extend({
         analytics.track('Deployed an app', {
             app_name: app_name,
             deploy_id: deploy_id,
-            email: email,
+            email: email
         });
 
         this.channel = pusher.subscribe(deploy_id);
@@ -115,9 +118,8 @@ var AppView = Backbone.View.extend({
         }
         else {
             this.$('div.control-group').addClass('error');
-            var $input = this.$('#email_input').parent();
-            var errorMessage = '<span class="help-inline">' + deploy.validationError + '</span>';
-            $(errorMessage).insertAfter($input);
+            var $errorMessage = $(".help-inline");
+            $errorMessage.text(deploy.validationError);
         }
     },
 
@@ -148,7 +150,7 @@ var AppView = Backbone.View.extend({
             var auth_data = '<div class="alert alert-info auth-details">Authentication details<br/>' +
                             '<strong>Username:</strong> ' + data['username'] + '<br/>' +
                             '<strong>Password:</strong> ' + data['password'] +
-                            '</div>'
+                            '</div>';
             $(auth_data).insertAfter($info);
         }
 },
