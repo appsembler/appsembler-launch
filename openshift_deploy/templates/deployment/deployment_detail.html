@@ -17,7 +17,7 @@
 {% block content %}
 <div id="central-widget">
     <div class="form-deploy">
-    {% if object.status = 'Completed' or object.status = 'Expired' %}
+    {% if object.status == 'Completed' %}
       <h3>{{ object.project.name }} deploy completed</h3>
       <div class="alert alert-success" id="info-message-section">
         <i class="icon-wrench"></i><span id="info-message">Successfully deployed!</span>
@@ -36,12 +36,17 @@
         <div class="bar" style="width: {{ percentage }}%;"></div>
       </div>
       {% endif %}
-    {% elif object.status = 'Failed' %}
+    {% elif object.status == 'Failed' %}
       <h3>{{ object.project.name }} deploy failed</h3>
       <div class="alert alert-error" id="info-message-section">
         <i class="icon-remove"></i><span id="info-message">There's been an error during deployment</span>
       </div>
-      <p class="error_message">{{ object.project.name }} couldn't be deployed</p> 
+      <p class="error_message">{{ object.project.name }} couldn't be deployed</p>
+    {% elif object.status == 'Expired' %}
+        <h3>{{ object.project.name }} expired!</h3>
+        <div class="alert" id="info-message-section">
+            <i class="icon-time"></i><span id="info-message"> Your timed trial of the application has expired.</span>
+        </div>
     {% endif %}
     </div>
 </div>
