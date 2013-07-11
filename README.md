@@ -3,7 +3,7 @@
 
 This instructions are written under the assumption that you have [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/en/latest/) set up on your machine.
 
-You also need working [OpenShift](https://www.openshift.com/), [Pusher](http://pusher.com/) and [Customer.io](http://customer.io/) accounts.
+You also need working [OpenShift](https://www.openshift.com/), [Pusher](http://pusher.com/), [Segment.io](https://segment.io/) and [Customer.io](http://customer.io/) accounts.
 
 1. Create a new virtual env: `mkvirtualenv appsemblerlaunch`
 2. Set the required env variables in your virtual environments `bin/postactivate` script:
@@ -26,6 +26,11 @@ You also need working [OpenShift](https://www.openshift.com/), [Pusher](http://p
 		# Customer.io settings
 		export CUSTOMERIO_SITE_ID=''
 		export CUSTOMERIO_API_KEY=''
+
+		# Segment.io settings
+		export CUSTOMERIO_SITE_ID=''
+		export CUSTOMERIO_API_KEY=''
+
 3. Clone this repo: `git clone git@github.com:appsembler/appsembler-launch.git`
 4. Activate the virtualenv: `workon appsemblerlaunch`
 5. `cd appsembler-launch; setvirtualenvproject`
