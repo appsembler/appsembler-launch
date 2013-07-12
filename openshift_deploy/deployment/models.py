@@ -141,6 +141,7 @@ class Deployment(models.Model):
             self.launch_time = timezone.now()
             self.expiration_time = self.launch_time + datetime.timedelta(minutes=60)
             instance[self.deploy_id].trigger('deployment_complete', {
+                'app_name': self.project.name,
                 'message': "Deployment complete!",
                 'app_url': app_url,
                 'username': self.project.default_username,
