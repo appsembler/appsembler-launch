@@ -226,3 +226,7 @@ PUSHER_APP_SECRET = get_env_variable('PUSHER_APP_SECRET')
 # Customer.io settings
 CUSTOMERIO_SITE_ID = get_env_variable('CUSTOMERIO_SITE_ID')
 CUSTOMERIO_API_KEY = get_env_variable('CUSTOMERIO_API_KEY')
+
+# Docker settings
+DOCKER_HOST = get_env_variable('DOCKER_HOST')
+DOCKER_PORT = get_env_variable('DOCKER_PORT')

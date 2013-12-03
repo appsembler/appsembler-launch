@@ -7,7 +7,7 @@ from .models import Deployment, Project
 class ProjectResource(ModelResource):
     class Meta:
         resource_name = 'projects'
-        queryset = Project.objects.all().order_by('name')
+        queryset = Project.objects.filter(status="Active").order_by('name')
         limit = 0
         authorization = Authorization()
 

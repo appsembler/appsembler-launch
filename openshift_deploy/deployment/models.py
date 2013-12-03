@@ -96,7 +96,7 @@ class Deployment(models.Model):
 
     def deploy(self):
         instance = self._get_pusher_instance()
-        li = self._get_openshift_instance()
+        dock = self._get_docker_instance()
         instance[self.deploy_id].trigger('info_update', {
             'message': "Creating a new app...",
             'percent': 30
@@ -104,16 +104,14 @@ class Deployment(models.Model):
         message = None
         log_error = False
         try:
-            status, res = li.app_create(
-                app_name=self.deploy_id,
-                app_type=self.project.cartridges_list(),
-                init_git_url=self.project.github_url
-            )
-            data = res()
-        except (OpenShiftException, SSLError, ValueError) as e:
+            payload = {
+                
+            }
+            status = 200
+        except (SSLError, ValueError) as e:
             # workaround to be able to log errors when the deployment fails
-            if e.__class__ == OpenShiftException:
-                log_error = True
+            #if e.__class__ == docker.client.APIError:
+            #    log_error = True
             status = 500
             message = "A critical error has occured."
             logger.error("Critical error has occured during deployment".format(self.project.name),
@@ -127,8 +125,8 @@ class Deployment(models.Model):
             'message': "Getting results...",
             'percent': 60
         })
-        if status == 201:
-            app_url = data['data'].get('app_url')
+        if status != 500:
+            app_url = "temp_url"
             self.url = app_url
             self.status = 'Completed'
             self.launch_time = timezone.now()
@@ -152,7 +150,7 @@ class Deployment(models.Model):
         else:
             self.status = 'Failed'
             if log_error:
-                error_log = DeploymentErrorLog(deployment=self, http_status=status, error_log=data['messages'][0]['text'])
+                error_log = DeploymentErrorLog(deployment=self, http_status=status, error_log="error")
                 error_log.save()
             instance[self.deploy_id].trigger('deployment_failed', {
                 'message': "Deployment failed!",
@@ -171,15 +169,12 @@ class Deployment(models.Model):
                 expiration_time=timezone.localtime(self.expiration_time)
             )
 
-    def _get_openshift_instance(self):
-        openshift = Openshift(
-            host=settings.OPENSHIFT_HOST,
-            user=settings.OPENSHIFT_USER,
-            passwd=settings.OPENSHIFT_PASSWORD,
-            debug=settings.OPENSHIFT_DEBUG,
-            verbose=settings.OPENSHIFT_VERBOSE
+    def _get_docker_instance(self):
+        dock = docker.Client(
+            base_url='{0}:{1}'.format(settings.DOCKER_HOST, settings.DOCKER_PORT),
+            version="1.7"
         )
-        return openshift
+        return dock
 
     def _get_pusher_instance(self):
         push = pusher.Pusher(

@@ -5,7 +5,7 @@ function validateEmail(email)
 }
 
 var API_ROOT = '/api/v1/';
-var pusher = new Pusher('bb4a670d8f7a12112716');
+var pusher = new Pusher('cea6dff5fc1f38a2d45d');
 
 // Models
 var Project = Backbone.Model.extend({});
