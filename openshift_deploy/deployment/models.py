@@ -23,8 +23,7 @@ class Project(models.Model):
 
     name = models.CharField(max_length=100)
     github_url = models.CharField(max_length=200)
-    version = models.CharField(max_length=300)
-    database = models.CharField(max_length=300, blank=True)
+    image_name = models.CharField(max_length=300)
     slug = models.SlugField(max_length=40, editable=False, blank=True, null=True)
     status = StatusField(default=STATUS.Inactive)
     default_username = models.CharField(max_length=30, blank=True)
@@ -41,12 +40,6 @@ class Project(models.Model):
         if not self.id:
             self.slug = slugify(self.name)
         super(Project, self).save(*args, **kwargs)
-
-    def cartridges_list(self):
-        complete_list = self.version
-        if self.database:
-            complete_list += ("," + self.database)
-        return [v.strip() for v in complete_list.split(',')]
 
     def landing_page_url(self):
         return reverse('landing_page', kwargs={'slug': self.slug})
