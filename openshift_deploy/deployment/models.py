@@ -1,6 +1,8 @@
 import datetime
+import json
 import logging
 import pusher
+import requests
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
@@ -96,18 +98,54 @@ class Deployment(models.Model):
 
     def deploy(self):
         instance = self._get_pusher_instance()
-        dock = self._get_docker_instance()
         instance[self.deploy_id].trigger('info_update', {
-            'message': "Creating a new app...",
+            'message': "Creating a new container...",
             'percent': 30
         })
         message = None
         log_error = False
         try:
-            payload = {
-                
+            headers = {
+                'content-type': 'application/json'
             }
-            status = 200
+            # run the container
+            payload = {
+                "image":"jbfink/wordpress",
+                "hosts":["/api/v1/hosts/1/"],
+                "ports": ["80:"]
+            }
+            r = requests.post(
+                "{0}/api/v1/containers/?username={1}&api_key={2}".format(settings.SHIPYARD_HOST, settings.SHIPYARD_USER, settings.SHIPYARD_KEY),
+                data=json.dumps(payload),
+                headers=headers
+            )
+            print "{0}/api/v1/containers/?username={1}&api_key={2}".format(settings.SHIPYARD_HOST, settings.SHIPYARD_USER, settings.SHIPYARD_KEY)
+            if r.status_code == 201:
+                data = json.loads(r.text)
+                container_uri = data['resource_uri']
+
+            # create the app (for dynamic routing)
+            instance[self.deploy_id].trigger('info_update', {
+                'message': "Assigning an URL to the app...",
+                'percent': 60
+            })
+            domain_name = "{0}.app.appsembler.com".format(self.deploy_id)
+            payload = {
+                "name": self.deploy_id,
+                "description": self.project.name,
+                "domain_name": domain_name,
+                "backend_port": 80,
+                "protocol": "http",
+                "containers":[container_uri]
+            }
+            r = requests.post(
+                "{0}/api/v1/applications/?username={1}&api_key={2}".format(settings.SHIPYARD_HOST, settings.SHIPYARD_USER, settings.SHIPYARD_KEY),
+                data=json.dumps(payload),
+                headers=headers
+            )
+            status = r.status_code
+            print status
+            print r.text
         except (SSLError, ValueError) as e:
             # workaround to be able to log errors when the deployment fails
             #if e.__class__ == docker.client.APIError:
@@ -122,11 +160,11 @@ class Deployment(models.Model):
                 }
             )
         instance[self.deploy_id].trigger('info_update', {
-            'message': "Getting results...",
-            'percent': 60
+            'message': "Getting information...",
+            'percent': 90
         })
         if status != 500:
-            app_url = "temp_url"
+            app_url = "http://{0}".format(domain_name)
             self.url = app_url
             self.status = 'Completed'
             self.launch_time = timezone.now()
@@ -168,13 +206,6 @@ class Deployment(models.Model):
                 remaining_minutes=self.get_remaining_minutes(),
                 expiration_time=timezone.localtime(self.expiration_time)
             )
-
-    def _get_docker_instance(self):
-        dock = docker.Client(
-            base_url='{0}:{1}'.format(settings.DOCKER_HOST, settings.DOCKER_PORT),
-            version="1.7"
-        )
-        return dock
 
     def _get_pusher_instance(self):
         push = pusher.Pusher(
