@@ -27,7 +27,7 @@ class Project(models.Model):
     name = models.CharField(max_length=100)
     github_url = models.CharField(max_length=200)
     image_name = models.CharField(max_length=300)
-    ports = models.CharField(max_length=300, help_text="List of exposed ports separated by spaces, example: 80 22")
+    ports = models.CharField(max_length=300, help_text="Internally exposed port, example: 80")
     slug = models.SlugField(max_length=40, editable=False, blank=True, null=True)
     status = StatusField(default=STATUS.Inactive)
     default_username = models.CharField(max_length=30, blank=True)
@@ -135,7 +135,7 @@ class Deployment(models.Model):
                 "name": self.deploy_id,
                 "description": self.project.name,
                 "domain_name": domain_name,
-                "backend_port": 80,
+                "backend_port": self.project.ports,
                 "protocol": "http",
                 "containers":[container_uri]
             }
