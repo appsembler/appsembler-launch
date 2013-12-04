@@ -3,6 +3,7 @@ import json
 import logging
 import pusher
 import requests
+import time
 from django.conf import settings
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
@@ -26,6 +27,7 @@ class Project(models.Model):
     name = models.CharField(max_length=100)
     github_url = models.CharField(max_length=200)
     image_name = models.CharField(max_length=300)
+    ports = models.CharField(max_length=300, help_text="List of exposed ports separated by spaces, example: 80 22")
     slug = models.SlugField(max_length=40, editable=False, blank=True, null=True)
     status = StatusField(default=STATUS.Inactive)
     default_username = models.CharField(max_length=30, blank=True)
@@ -110,16 +112,15 @@ class Deployment(models.Model):
             }
             # run the container
             payload = {
-                "image":"jbfink/wordpress",
+                "image": self.project.image_name,
                 "hosts":["/api/v1/hosts/1/"],
-                "ports": ["80:"]
+                "ports": self.project.ports.split(' ')
             }
             r = requests.post(
                 "{0}/api/v1/containers/?username={1}&api_key={2}".format(settings.SHIPYARD_HOST, settings.SHIPYARD_USER, settings.SHIPYARD_KEY),
                 data=json.dumps(payload),
                 headers=headers
             )
-            print "{0}/api/v1/containers/?username={1}&api_key={2}".format(settings.SHIPYARD_HOST, settings.SHIPYARD_USER, settings.SHIPYARD_KEY)
             if r.status_code == 201:
                 data = json.loads(r.text)
                 container_uri = data['resource_uri']
@@ -144,8 +145,6 @@ class Deployment(models.Model):
                 headers=headers
             )
             status = r.status_code
-            print status
-            print r.text
         except (SSLError, ValueError) as e:
             # workaround to be able to log errors when the deployment fails
             #if e.__class__ == docker.client.APIError:
@@ -163,6 +162,7 @@ class Deployment(models.Model):
             'message': "Getting information...",
             'percent': 90
         })
+        time.sleep(3)
         if status != 500:
             app_url = "http://{0}".format(domain_name)
             self.url = app_url
