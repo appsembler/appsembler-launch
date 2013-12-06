@@ -4,19 +4,17 @@ import logging
 import pusher
 import requests
 import time
+from urlparse import urlparse
 from django.conf import settings
-from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.template.defaultfilters import slugify
-from django.template.loader import render_to_string
 from django.utils import timezone
 from customerio import CustomerIO
 from model_utils.fields import StatusField
 from model_utils import Choices
-from oshift import Openshift, OpenShiftException
 from requests.exceptions import SSLError
-from deployment.tasks import deploy
+from .tasks import deploy
 
 logger = logging.getLogger(__name__)
 
@@ -60,6 +58,8 @@ class Deployment(models.Model):
     url = models.CharField(max_length=200)
     email = models.EmailField()
     deploy_id = models.CharField(max_length=100)
+    remote_container_id = models.IntegerField(default=0)
+    remote_app_id = models.IntegerField(default=0)
     launch_time = models.DateTimeField(blank=True, null=True)
     expiration_time = models.DateTimeField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -115,7 +115,7 @@ class Deployment(models.Model):
                 "image": self.project.image_name,
                 "hosts": ["/api/v1/hosts/1/"],
                 "ports": self.project.ports.split(' '),
-                "wait": 30
+                #"wait": 30
             }
             r = requests.post(
                 "{0}/api/v1/containers/?username={1}&api_key={2}".format(settings.SHIPYARD_HOST, settings.SHIPYARD_USER, settings.SHIPYARD_KEY),
@@ -123,8 +123,8 @@ class Deployment(models.Model):
                 headers=headers
             )
             if r.status_code == 201:
-                data = json.loads(r.text)
-                container_uri = data['resource_uri']
+                container_uri = urlparse(r.headers['location']).path
+                self.remote_container_id = container_uri.split('/')[-2]
 
             # create the app (for dynamic routing)
             instance[self.deploy_id].trigger('info_update', {
@@ -138,13 +138,16 @@ class Deployment(models.Model):
                 "domain_name": domain_name,
                 "backend_port": self.project.ports,
                 "protocol": "http",
-                "containers":[container_uri]
+                "containers": [container_uri]
             }
             r = requests.post(
                 "{0}/api/v1/applications/?username={1}&api_key={2}".format(settings.SHIPYARD_HOST, settings.SHIPYARD_USER, settings.SHIPYARD_KEY),
                 data=json.dumps(payload),
                 headers=headers
             )
+            if r.status_code == 201:
+                app_uri = urlparse(r.headers['location']).path
+                self.remote_app_id = app_uri.split('/')[-2]
             status = r.status_code
         except (SSLError, ValueError) as e:
             # workaround to be able to log errors when the deployment fails
@@ -203,7 +206,7 @@ class Deployment(models.Model):
                 customer_id=self.email,
                 name='app_expiring_soon',
                 app_url=self.url,
-                status_url= "http://dockerlaunch-appsembler.rhcloud.com/" + reverse('deployment_detail', kwargs={'deploy_id': self.deploy_id}),
+                status_url="http://dockerlaunch-appsembler.rhcloud.com/" + reverse('deployment_detail', kwargs={'deploy_id': self.deploy_id}),
                 remaining_minutes=self.get_remaining_minutes(),
                 expiration_time=timezone.localtime(self.expiration_time)
             )
