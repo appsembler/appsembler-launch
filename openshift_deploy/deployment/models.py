@@ -115,7 +115,7 @@ class Deployment(models.Model):
                 "image": self.project.image_name,
                 "hosts": ["/api/v1/hosts/1/"],
                 "ports": self.project.ports.split(' '),
-                #"wait": 30
+                "wait": 30
             }
             r = requests.post(
                 "{0}/api/v1/containers/?username={1}&api_key={2}".format(settings.SHIPYARD_HOST, settings.SHIPYARD_USER, settings.SHIPYARD_KEY),
@@ -162,11 +162,12 @@ class Deployment(models.Model):
                     'project_name': self.project.name,
                 }
             )
+        time.sleep(1)
         instance[self.deploy_id].trigger('info_update', {
             'message': "Getting information...",
             'percent': 90
         })
-        time.sleep(3)
+        time.sleep(1)
         if status != 500:
             app_url = "http://{0}".format(domain_name)
             self.url = app_url
