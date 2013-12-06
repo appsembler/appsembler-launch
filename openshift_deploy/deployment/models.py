@@ -104,27 +104,25 @@ class Deployment(models.Model):
             'message': "Creating a new container...",
             'percent': 30
         })
-        message = None
         log_error = False
-        try:
-            headers = {
-                'content-type': 'application/json'
-            }
-            # run the container
-            payload = {
-                "image": self.project.image_name,
-                "hosts": ["/api/v1/hosts/1/"],
-                "ports": self.project.ports.split(' '),
-                "wait": 30
-            }
-            r = requests.post(
-                "{0}/api/v1/containers/?username={1}&api_key={2}".format(settings.SHIPYARD_HOST, settings.SHIPYARD_USER, settings.SHIPYARD_KEY),
-                data=json.dumps(payload),
-                headers=headers
-            )
-            if r.status_code == 201:
-                container_uri = urlparse(r.headers['location']).path
-                self.remote_container_id = container_uri.split('/')[-2]
+        headers = {
+            'content-type': 'application/json'
+        }
+        # run the container
+        payload = {
+            "image": self.project.image_name,
+            "hosts": ["/api/v1/hosts/1/"],
+            "ports": self.project.ports.split(' '),
+            #"wait": 30
+        }
+        r = requests.post(
+            "{0}/api/v1/containers/?username={1}&api_key={2}".format(settings.SHIPYARD_HOST, settings.SHIPYARD_USER, settings.SHIPYARD_KEY),
+            data=json.dumps(payload),
+            headers=headers
+        )
+        if r.status_code == 201:
+            container_uri = urlparse(r.headers['location']).path
+            self.remote_container_id = container_uri.split('/')[-2]
 
             # create the app (for dynamic routing)
             instance[self.deploy_id].trigger('info_update', {
@@ -148,27 +146,14 @@ class Deployment(models.Model):
             if r.status_code == 201:
                 app_uri = urlparse(r.headers['location']).path
                 self.remote_app_id = app_uri.split('/')[-2]
-            status = r.status_code
-        except (SSLError, ValueError) as e:
-            # workaround to be able to log errors when the deployment fails
-            #if e.__class__ == docker.client.APIError:
-            #    log_error = True
-            status = 500
-            message = "A critical error has occured."
-            logger.error("Critical error has occured during deployment".format(self.project.name),
-                exc_info=True,
-                extra={
-                    'user_email': self.email,
-                    'project_name': self.project.name,
-                }
-            )
+        status = r.status_code
         time.sleep(1)
         instance[self.deploy_id].trigger('info_update', {
             'message': "Getting information...",
             'percent': 90
         })
         time.sleep(1)
-        if status != 500:
+        if status == 201:
             app_url = "http://{0}".format(domain_name)
             self.url = app_url
             self.status = 'Completed'
