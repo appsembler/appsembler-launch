@@ -208,7 +208,7 @@ class Deployment(models.Model):
                 app_url=self.url,
                 status_url="http://dockerlaunch-appsembler.rhcloud.com/" + reverse('deployment_detail', kwargs={'deploy_id': self.deploy_id}),
                 remaining_minutes=self.get_remaining_minutes(),
-                expiration_time=timezone.localtime(self.expiration_time)
+                expiration_time=timezone.localtime(self.expiration_time.isoformat())
             )
 
     def _get_pusher_instance(self):
