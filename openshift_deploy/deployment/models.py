@@ -130,7 +130,7 @@ class Deployment(models.Model):
                 'message': "Assigning an URL to the app...",
                 'percent': 60
             })
-            domain_name = "{0}.app.appsembler.com".format(self.deploy_id)
+            domain_name = "{0}.demo.appsembler.com".format(self.deploy_id)
             payload = {
                 "name": self.deploy_id,
                 "description": self.project.name,
@@ -181,7 +181,7 @@ class Deployment(models.Model):
                 cio.track(customer_id=self.email,
                           name='app_deploy_complete',
                           app_url=app_url,
-                          status_url="http://launch.appsembler.com/" + reverse('deployment_detail', kwargs={'deploy_id': self.deploy_id}),
+                          status_url="http://dockerlaunch-appsembler.rhcloud.com/" + reverse('deployment_detail', kwargs={'deploy_id': self.deploy_id}),
                           username=self.project.default_username,
                           password=self.project.default_password
                 )
@@ -202,7 +202,7 @@ class Deployment(models.Model):
                 customer_id=self.email,
                 name='app_expiring_soon',
                 app_url=self.url,
-                status_url= "http://launch.appsembler.com/" + reverse('deployment_detail', kwargs={'deploy_id': self.deploy_id}),
+                status_url= "http://dockerlaunch-appsembler.rhcloud.com/" + reverse('deployment_detail', kwargs={'deploy_id': self.deploy_id}),
                 remaining_minutes=self.get_remaining_minutes(),
                 expiration_time=timezone.localtime(self.expiration_time)
             )
