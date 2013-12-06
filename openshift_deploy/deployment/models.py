@@ -113,8 +113,9 @@ class Deployment(models.Model):
             # run the container
             payload = {
                 "image": self.project.image_name,
-                "hosts":["/api/v1/hosts/1/"],
-                "ports": self.project.ports.split(' ')
+                "hosts": ["/api/v1/hosts/1/"],
+                "ports": self.project.ports.split(' '),
+                "wait": 30
             }
             r = requests.post(
                 "{0}/api/v1/containers/?username={1}&api_key={2}".format(settings.SHIPYARD_HOST, settings.SHIPYARD_USER, settings.SHIPYARD_KEY),
