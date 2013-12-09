@@ -25,10 +25,14 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Nate Aune', 'nate@appsembler.com'),
+    ('Filip Jukic', 'filip@appsembler.com'),
 )
 
 MANAGERS = ADMINS
+
+DEFAULT_FROM_EMAIL = 'support@appsembler.com'
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
 
 DATABASES = {
     'default': {
