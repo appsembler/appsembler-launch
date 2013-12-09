@@ -104,7 +104,6 @@ class Deployment(models.Model):
             'message': "Creating a new container...",
             'percent': 30
         })
-        log_error = False
         headers = {
             'content-type': 'application/json'
         }
@@ -177,9 +176,8 @@ class Deployment(models.Model):
                 )
         else:
             self.status = 'Failed'
-            if log_error:
-                error_log = DeploymentErrorLog(deployment=self, http_status=status, error_log="error")
-                error_log.save()
+            error_log = DeploymentErrorLog(deployment=self, http_status=status, error_log=r.text)
+            error_log.save()
             instance[self.deploy_id].trigger('deployment_failed', {
                 'message': "Deployment failed!",
             })
