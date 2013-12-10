@@ -112,6 +112,7 @@ class Deployment(models.Model):
             "image": self.project.image_name,
             "hosts": ["/api/v1/hosts/1/"],
             "ports": self.project.ports.split(' '),
+            "description": self.email or "",
             #"wait": 30
         }
         r = requests.post(
@@ -131,7 +132,7 @@ class Deployment(models.Model):
             domain_name = "{0}.demo.appsembler.com".format(self.deploy_id)
             payload = {
                 "name": self.deploy_id,
-                "description": self.project.name,
+                "description": "{0} for {1}".format(self.project.name, self.email),
                 "domain_name": domain_name,
                 "backend_port": self.project.ports,
                 "protocol": "http",
