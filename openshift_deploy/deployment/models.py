@@ -154,7 +154,8 @@ class Deployment(models.Model):
         })
         time.sleep(1)
         if status == 201:
-            app_url = "http://{0}".format(domain_name)
+            scheme = "https" if "443" in self.project.ports else "http"
+            app_url = "{0}://{1}".format(scheme, domain_name)
             self.url = app_url
             self.status = 'Completed'
             self.launch_time = timezone.now()
