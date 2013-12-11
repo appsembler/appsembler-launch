@@ -13,7 +13,6 @@ from django.utils import timezone
 from customerio import CustomerIO
 from model_utils.fields import StatusField
 from model_utils import Choices
-from requests.exceptions import SSLError
 from .tasks import deploy
 
 logger = logging.getLogger(__name__)
@@ -135,7 +134,7 @@ class Deployment(models.Model):
                 "description": "{0} for {1}".format(self.project.name, self.email),
                 "domain_name": domain_name,
                 "backend_port": self.project.ports,
-                "protocol": "http",
+                "protocol": "https" if "443" in self.project.ports else "http",
                 "containers": [container_uri]
             }
             r = requests.post(
