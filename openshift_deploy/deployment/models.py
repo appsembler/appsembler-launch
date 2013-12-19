@@ -25,6 +25,8 @@ class Project(models.Model):
     github_url = models.CharField(max_length=200)
     image_name = models.CharField(max_length=300)
     ports = models.CharField(max_length=300, help_text="Internally exposed port, example: 80")
+    env_vars = models.CharField(max_length=500, blank=True,
+                                help_text="Space separated environment variables, example: key1=val1 key2=val2")
     trial_duration = models.IntegerField(default=60, help_text="Trial duration in minutes")
     slug = models.SlugField(max_length=40, editable=False, blank=True, null=True)
     status = StatusField(default=STATUS.Inactive)
@@ -113,6 +115,7 @@ class Deployment(models.Model):
             "hosts": ["/api/v1/hosts/1/"],
             "ports": self.project.ports.split(' '),
             "description": self.email or "",
+            "environment": self.project.env_vars.split(' ')
             #"wait": 30
         }
         r = requests.post(
