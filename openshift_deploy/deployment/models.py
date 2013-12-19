@@ -25,6 +25,7 @@ class Project(models.Model):
     github_url = models.CharField(max_length=200)
     image_name = models.CharField(max_length=300)
     ports = models.CharField(max_length=300, help_text="Internally exposed port, example: 80")
+    trial_duration = models.IntegerField(default=60, help_text="Trial duration in minutes")
     slug = models.SlugField(max_length=40, editable=False, blank=True, null=True)
     status = StatusField(default=STATUS.Inactive)
     default_username = models.CharField(max_length=30, blank=True)
@@ -95,7 +96,7 @@ class Deployment(models.Model):
     get_remaining_minutes.short_description = 'Minutes remaining'
 
     def expiration_datetime(self):
-        return self.launch_time + datetime.timedelta(minutes=60)
+        return self.launch_time + datetime.timedelta(minutes=self.project.trial_duration)
 
     def deploy(self):
         instance = self._get_pusher_instance()
@@ -158,7 +159,7 @@ class Deployment(models.Model):
             self.url = app_url
             self.status = 'Completed'
             self.launch_time = timezone.now()
-            self.expiration_time = self.launch_time + datetime.timedelta(minutes=60)
+            self.expiration_time = self.expiration_datetime()
             instance[self.deploy_id].trigger('deployment_complete', {
                 'app_name': self.project.name,
                 'message': "Deployment complete!",
