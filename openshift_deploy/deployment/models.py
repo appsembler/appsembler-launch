@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 class Project(models.Model):
-    STATUS = Choices('Active', 'Inactive')
+    STATUS = Choices('Active', 'Hidden', 'Inactive')
 
     name = models.CharField(max_length=100)
     github_url = models.CharField(max_length=200)

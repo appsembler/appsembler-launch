@@ -32,7 +32,7 @@ class ProjectDeployerView(DeployerView, DetailView):
     template_name = 'deployment/deployer_detail.html'
 
     def get_queryset(self):
-        return Project.objects.filter(slug=self.kwargs['slug'])
+        return Project.objects.filter(slug=self.kwargs['slug']).exclude(status=Project.STATUS.Inactive)
 
     def get_context_data(self, **kwargs):
         data = super(ProjectDeployerView, self).get_context_data(**kwargs)
