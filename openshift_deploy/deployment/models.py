@@ -171,6 +171,7 @@ class Deployment(models.Model):
                 cio.track(customer_id=self.email,
                           name='app_deploy_complete',
                           app_url=app_url,
+                          app_name=self.project.name,
                           status_url="http://launcher.appsembler.com" + reverse('deployment_detail', kwargs={'deploy_id': self.deploy_id}),
                           username=self.project.default_username,
                           password=self.project.default_password
