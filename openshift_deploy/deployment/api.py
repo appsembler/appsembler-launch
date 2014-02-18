@@ -10,6 +10,7 @@ class ProjectResource(ModelResource):
         queryset = Project.objects.exclude(status=Project.STATUS.Inactive).order_by('name')
         limit = 0
         authorization = Authorization()
+        excludes = ('env_vars',)
 
 
 class DeploymentResource(ModelResource):
